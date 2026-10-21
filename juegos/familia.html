@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zona de Juegos - La Familia en LSB</title>
+<style>
+:root{--morado:#5546bd;--morado-oscuro:#392e91;--celeste:#e9f8ff;--verde:#168768;--texto:#263047}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:var(--texto);background:linear-gradient(135deg,#f0edff,#e5faff)}
+header{background:linear-gradient(120deg,#4939a9,#8167e8);color:white;padding:28px 16px;text-align:center}
+header h1{margin:0 0 10px}header p{margin:0}
+main{max-width:1150px;margin:auto;padding:22px}
+.intro{background:white;border-radius:18px;padding:20px;text-align:center;box-shadow:0 5px 20px #30236b12;margin-bottom:20px}
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:20px 0}
+button{font-size:15px;font-weight:bold;border:0;border-radius:12px;padding:13px 17px;background:var(--morado);color:white;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+button:focus-visible{outline:3px solid #ffb52e;outline-offset:3px}
+button.verde{background:var(--verde)}button.naranja{background:#db7b23}button.gris{background:#586174}
+.juego{display:none;background:white;border-radius:20px;padding:24px;margin-bottom:25px;box-shadow:0 5px 20px #30236b12}
+.juego.activo{display:block}
+h2{color:var(--morado)}h3{margin-bottom:10px}.centro{text-align:center}
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:15px;margin:20px 0}
+.tarjeta{background:#f4f1ff;border:2px solid #ddd5ff;border-radius:15px;padding:12px;text-align:center;min-width:0}
+.tarjeta img{width:100%;height:135px;object-fit:contain;background:white;border-radius:10px}
+.tarjeta h3{font-size:16px}
+.referencia{width:100%;max-width:360px;height:280px;object-fit:contain;background:#f4f1ff;border:2px dashed #b9aff0;border-radius:15px}
+.columnas{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{min-width:0;padding:18px;border-radius:17px;background:#f8f7ff;text-align:center}
+.camara{width:100%;max-width:520px;margin:12px auto;aspect-ratio:4/3;position:relative;overflow:hidden;background:#171923;border:3px solid #bdb3ff;border-radius:15px}
+.camara video{display:block;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.camara canvas{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
+.estado{background:#fff5d7;padding:12px;border-radius:12px;line-height:1.5;margin:12px 0}
+.opciones{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:15px 0}
+.opciones button{background:#eeeaff;color:#34277e;border:2px solid #d0c5ff}
+.opciones button.correcta{background:#d8f8e9;border-color:#168768;color:#145d47}
+.opciones button.incorrecta{background:#ffe3e3;border-color:#d44c4c;color:#872626}
+#mensaje{min-height:28px;font-weight:bold;text-align:center;margin-top:15px}
+#popupCamara{display:none;position:fixed;inset:0;background:#17132ccc;z-index:99;align-items:center;justify-content:center;padding:18px}
+#popupCamara.mostrar{display:flex}
+.popup-contenido{max-width:440px;background:white;border-radius:20px;padding:25px;text-align:center}
+.popup-contenido h2{margin-top:0}
+footer{text-align:center;padding:22px;color:#56516c}
+.aviso{padding:12px;background:#fff5d7;border-radius:12px;font-size:14px}
+@media(max-width:720px){.columnas{grid-template-columns:1fr}main{padding:13px}.juego{padding:16px}}
+/* Fondo para todo el juego */
+body {
+    background-image: url("imagenes/fondomenu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Paneles de los cinco juegos */
+.game,
+.juego,
+.contenedor-juego {
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 18px;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>👨‍👩‍👧‍👦 La Familia en Lengua de Señas</h1>
+<p>¡Aprende, juega y practica nuevas señas!</p>
+</header>
+<main>
+<section class="intro">
+<h2>🎮 ¡Bienvenido a la zona de juegos!</h2>
+<p>Aprende palabras relacionadas con la familia mediante imágenes, memoria, preguntas y práctica con cámara.</p>
+<p><strong>Elige un juego para comenzar.</strong></p>
+</section>
+<nav class="menu" aria-label="Seleccionar juego">
+<button onclick="abrirJuego('aprender')">📚 Aprender</button>
+<button onclick="abrirJuego('memoria')">🧠 Memoria</button>
+<button onclick="abrirJuego('quien')">❓ ¿Quién es?</button>
+<button onclick="abrirJuego('parejas')">🧩 Parejas</button>
+<button onclick="abrirJuego('reto')">🏆 El gran reto</button>
+<button onclick="abrirJuego('camara')">📷 Mi cámara</button>
+</nav>
+
+<section id="aprender" class="juego activo">
+<h2>📚 Juego 1: Aprende las señas</h2><p>Observa las imágenes de referencia y practica cada palabra.</p>
+<div id="listaFamilia" class="tarjetas"></div>
+</section>
+
+<section id="memoria" class="juego">
+<h2>🧠 Juego 2: Memoria de la familia</h2><p>Encuentra las dos tarjetas con la misma palabra.</p>
+<div id="tableroMemoria" class="tarjetas"></div>
+<p id="resultadoMemoria" class="centro">Parejas encontradas: 0</p>
+<div class="centro"><button onclick="iniciarMemoria()">🔄 Reiniciar memoria</button></div>
+</section>
+
+<section id="quien" class="juego">
+<h2>❓ Juego 3: ¿Quién es?</h2><div class="centro">
+<h3 id="preguntaQuien">¿Quién es?</h3><img id="imagenQuien" class="referencia" alt="Imagen de referencia">
+<div id="opcionesQuien" class="opciones"></div><p id="mensajeQuien" aria-live="polite"></p>
+<button class="verde" onclick="nuevaPreguntaQuien()">Siguiente pregunta ➜</button></div>
+</section>
+
+<section id="parejas" class="juego">
+<h2>🧩 Juego 4: Une la palabra con la imagen</h2><p>Primero elige una palabra y después la imagen correspondiente.</p>
+<div class="columnas"><div class="panel"><h3>Palabras</h3><div id="palabrasParejas" class="opciones"></div></div>
+<div class="panel"><h3>Imágenes</h3><div id="imagenesParejas" class="tarjetas"></div></div></div>
+<p id="mensajeParejas" class="centro" aria-live="polite"></p><div class="centro"><button onclick="iniciarParejas()">🔄 Reiniciar parejas</button></div>
+</section>
+
+<section id="reto" class="juego">
+<h2>🏆 Juego 5: El gran reto familiar</h2><div class="centro">
+<h3 id="preguntaReto">¿Qué palabra corresponde?</h3><img id="imagenReto" class="referencia" alt="Imagen de referencia">
+<div id="opcionesReto" class="opciones"></div><p id="puntosReto" aria-live="polite">Puntuación: 0</p>
+<p id="mensajeReto" aria-live="polite"></p><button class="verde" onclick="siguienteReto()">Siguiente reto ➜</button></div>
+</section>
+
+<section id="camara" class="juego">
+<h2>📷 Juego 6: Practica la seña con la cámara</h2>
+<p>Observa la imagen, imita la seña frente a la cámara y registra tu práctica. La cámara puede mostrar puntos de referencia de las manos, pero no evalúa automáticamente si la seña es correcta.</p>
+<div class="columnas">
+<div class="panel"><h3>👀 Observa esta seña</h3><h2 id="palabraCamara">PAPÁ</h2>
+<img id="referenciaCamara" class="referencia" src="imagenes/FAMILIA/´PAPA.png" alt="Referencia de la seña">
+<p id="contadorCamara">Palabra 1 de 8</p></div>
+<div class="panel"><h3>🤟 Haz la seña</h3><div class="camara"><video id="video" autoplay muted playsinline></video><canvas id="lienzo"></canvas></div>
+<p id="estadoCamara" class="estado" aria-live="polite">La cámara está apagada.</p>
+<button id="botonCamara" onclick="activarCamara()">📷 Activar cámara</button></div>
+</div>
+<div class="centro" style="margin-top:20px"><button onclick="palabraAnterior()">⬅ Anterior</button>
+<button class="verde" onclick="registrarPractica()">✓ Terminé de practicar</button>
+<button onclick="palabraSiguiente()">Siguiente ➡</button><p id="resultadoCamara" aria-live="polite"></p></div>
+<p class="aviso">Si una imagen no aparece, revisa que el nombre y la extensión coincidan exactamente con el archivo de tu carpeta.</p>
+</section>
+
+<div id="popupCamara" role="dialog" aria-modal="true" aria-labelledby="tituloPopup">
+<div class="popup-contenido"><h2 id="tituloPopup">📷 Permite el acceso a la cámara</h2>
+<p>Necesitamos tu permiso para mostrar tus manos mientras practicas las señas de la familia.</p>
+<button class="verde" onclick="aceptarCamara()">Permitir acceso</button>
+<button class="gris" onclick="cerrarPopup()">Ahora no</button></div></div>
+</main>
+<footer><p>Aprender juntos nos ayuda a construir una educación más inclusiva. 💜</p></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+<script>
+/*
+  Las rutas están escritas como en el juego de colores: son relativas al HTML.
+  Cambia solo el nombre del archivo si tus imágenes tienen otros nombres.
+  Carpeta esperada: juegos/imagenes/FAMILIA/
+*/
+const familia = [
+ {palabra:"PAPÁ", imagen:"imagenes/FAMILIA/´PAPA.png"},
+ {palabra:"MAMÁ", imagen:"imagenes/FAMILIA/mami.png"},
+ {palabra:"HERMANO", imagen:"imagenes/FAMILIA/HERMANO.png"},
+ {palabra:"HERMANA", imagen:"imagenes/FAMILIA/HERMANA.png"},
+ {palabra:"ABUELO", imagen:"imagenes/FAMILIA/ABUELO.png"},
+ {palabra:"ABUELA", imagen:"imagenes/FAMILIA/ABUELA.png"},
+ {palabra:"HIJA", imagen:"imagenes/FAMILIA/HIJA.png"}
+];
+function mezclar(lista){const copia=[...lista];for(let i=copia.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copia[i],copia[j]]=[copia[j],copia[i]]}return copia}
+function abrirJuego(id){document.querySelectorAll(".juego").forEach(j=>j.classList.remove("activo"));document.getElementById(id).classList.add("activo");if(id==="camara"&&!camaraSolicitada)document.getElementById("popupCamara").classList.add("mostrar")}
+function crearTarjeta(persona,mostrarPalabra=true){const tarjeta=document.createElement("article");tarjeta.className="tarjeta";const imagen=document.createElement("img");imagen.src=persona.imagen;imagen.alt="Referencia de "+persona.palabra;imagen.onerror=function(){this.alt="No se encontró: "+persona.imagen};tarjeta.appendChild(imagen);if(mostrarPalabra){const titulo=document.createElement("h3");titulo.textContent=persona.palabra;tarjeta.appendChild(titulo)}return tarjeta}
+function cargarAprender(){const lista=document.getElementById("listaFamilia");lista.innerHTML="";familia.forEach(p=>lista.appendChild(crearTarjeta(p)))}
+
+let cartasMemoria=[],seleccionMemoria=[],bloqueadaMemoria=false,parejasEncontradas=0;
+function iniciarMemoria(){const duplicadas=familia.slice(0,6).flatMap(p=>[{...p,id:p.palabra+"-a"},{...p,id:p.palabra+"-b"}]);cartasMemoria=mezclar(duplicadas);seleccionMemoria=[];bloqueadaMemoria=false;parejasEncontradas=0;const tablero=document.getElementById("tableroMemoria");tablero.innerHTML="";cartasMemoria.forEach((c,i)=>{const b=document.createElement("button");b.className="tarjeta";b.style.color="#34277e";b.style.background="#eeeaff";b.style.border="2px solid #d0c5ff";b.style.minHeight="150px";b.textContent="❔ Descubrir";b.dataset.indice=i;b.onclick=()=>voltearCarta(i,b);tablero.appendChild(b)});document.getElementById("resultadoMemoria").textContent="Parejas encontradas: 0 de 6"}
+function voltearCarta(i,b){if(bloqueadaMemoria||seleccionMemoria.some(x=>x.indice===i)||b.dataset.encontrada==="si")return;const c=cartasMemoria[i];b.innerHTML="";const img=document.createElement("img");img.src=c.imagen;img.alt=c.palabra;img.style.cssText="width:100%;height:90px;object-fit:contain";img.onerror=function(){this.alt="No se encontró: "+c.imagen};b.appendChild(img);const t=document.createElement("div");t.textContent=c.palabra;b.appendChild(t);seleccionMemoria.push({indice:i,boton:b,carta:c});if(seleccionMemoria.length===2){bloqueadaMemoria=true;const[a,d]=seleccionMemoria;if(a.carta.palabra===d.carta.palabra){a.boton.dataset.encontrada="si";d.boton.dataset.encontrada="si";parejasEncontradas++;document.getElementById("resultadoMemoria").textContent=`¡Muy bien! Parejas encontradas: ${parejasEncontradas} de 6`;seleccionMemoria=[];bloqueadaMemoria=false;if(parejasEncontradas===6)document.getElementById("resultadoMemoria").textContent="🎉 ¡Ganaste! Encontraste todas las parejas."}else setTimeout(()=>{[a,d].forEach(x=>x.boton.textContent="❔ Descubrir");seleccionMemoria=[];bloqueadaMemoria=false},900)}}
+
+let personaQuien=null;
+function nuevaPreguntaQuien(){personaQuien=familia[Math.floor(Math.random()*familia.length)];document.getElementById("preguntaQuien").textContent="¿Qué familiar aparece en la imagen?";const img=document.getElementById("imagenQuien");img.src=personaQuien.imagen;img.alt="Imagen para identificar";img.onerror=function(){this.alt="No se encontró: "+personaQuien.imagen};const opciones=mezclar([personaQuien,...mezclar(familia.filter(p=>p!==personaQuien)).slice(0,3)]);const cont=document.getElementById("opcionesQuien");cont.innerHTML="";document.getElementById("mensajeQuien").textContent="";opciones.forEach(p=>{const b=document.createElement("button");b.textContent=p.palabra;b.onclick=()=>{const m=document.getElementById("mensajeQuien");if(p===personaQuien){m.textContent="🎉 ¡Correcto! Es "+p.palabra+".";b.classList.add("correcta")}else{m.textContent="Inténtalo otra vez. Observa la imagen.";b.classList.add("incorrecta")}};cont.appendChild(b)})}
+
+let palabraElegida=null,parejasCorrectas=new Set();
+function iniciarParejas(){palabraElegida=null;parejasCorrectas=new Set();const palabras=document.getElementById("palabrasParejas"),imagenes=document.getElementById("imagenesParejas");palabras.innerHTML="";imagenes.innerHTML="";const seleccion=mezclar(familia).slice(0,4);seleccion.forEach(p=>{const b=document.createElement("button");b.textContent=p.palabra;b.dataset.palabra=p.palabra;b.onclick=()=>{if(parejasCorrectas.has(p.palabra))return;palabraElegida=p;document.getElementById("mensajeParejas").textContent="Elegiste "+p.palabra+". Ahora elige su imagen."};palabras.appendChild(b)});mezclar(seleccion).forEach(p=>{const t=crearTarjeta(p,false);t.style.cursor="pointer";t.onclick=()=>{const m=document.getElementById("mensajeParejas");if(!palabraElegida){m.textContent="Primero elige una palabra.";return}if(parejasCorrectas.has(p.palabra)){m.textContent="Esa pareja ya está resuelta.";return}if(palabraElegida.palabra===p.palabra){parejasCorrectas.add(p.palabra);m.textContent="¡Correcto! "+p.palabra+" coincide.";t.style.border="3px solid #168768";[...palabras.children].forEach(b=>{if(b.dataset.palabra===p.palabra){b.disabled=true;b.style.background="#d8f8e9"}});if(parejasCorrectas.size===seleccion.length)m.textContent="🏆 ¡Excelente! Completaste todas las parejas."}else m.textContent="No coincide. Prueba otra imagen.";palabraElegida=null};imagenes.appendChild(t)})}
+
+let puntosReto=0,respondidoReto=false,actualReto=null;
+function siguienteReto(){actualReto=familia[Math.floor(Math.random()*familia.length)];respondidoReto=false;document.getElementById("preguntaReto").textContent="Selecciona la palabra que corresponde a la imagen.";const img=document.getElementById("imagenReto");img.src=actualReto.imagen;img.alt="Imagen del reto";img.onerror=function(){this.alt="No se encontró: "+actualReto.imagen};const opciones=mezclar([actualReto,...mezclar(familia.filter(p=>p!==actualReto)).slice(0,3)]);const cont=document.getElementById("opcionesReto");cont.innerHTML="";document.getElementById("mensajeReto").textContent="";opciones.forEach(p=>{const b=document.createElement("button");b.textContent=p.palabra;b.onclick=()=>{if(respondidoReto)return;respondidoReto=true;if(p===actualReto){puntosReto++;document.getElementById("mensajeReto").textContent="🎉 ¡Respuesta correcta!";b.classList.add("correcta")}else{document.getElementById("mensajeReto").textContent="La respuesta correcta era "+actualReto.palabra+".";b.classList.add("incorrecta")}document.getElementById("puntosReto").textContent="Puntuación: "+puntosReto};cont.appendChild(b)})}
+
+let indiceCamara=0,camaraSolicitada=false,flujoCamara=null,detectorManos=null,camaraActiva=false,procesandoVideo=false,bucleVideo=null;
+const practicadas=new Set(),video=document.getElementById("video"),lienzo=document.getElementById("lienzo"),ctx=lienzo.getContext("2d");
+function actualizarReferenciaCamara(){const p=familia[indiceCamara];document.getElementById("palabraCamara").textContent=p.palabra;const img=document.getElementById("referenciaCamara");img.src=p.imagen;img.alt="Referencia para la seña "+p.palabra;img.onerror=function(){this.alt="No se encontró: "+p.imagen};document.getElementById("contadorCamara").textContent=`Palabra ${indiceCamara+1} de ${familia.length}`}
+function palabraSiguiente(){indiceCamara=(indiceCamara+1)%familia.length;actualizarReferenciaCamara();document.getElementById("resultadoCamara").textContent=""}
+function palabraAnterior(){indiceCamara=(indiceCamara-1+familia.length)%familia.length;actualizarReferenciaCamara();document.getElementById("resultadoCamara").textContent=""}
+function registrarPractica(){practicadas.add(indiceCamara);document.getElementById("resultadoCamara").textContent="✓ Práctica registrada para "+familia[indiceCamara].palabra+". Esto no confirma automáticamente que la seña sea correcta.";if(practicadas.size===familia.length){document.getElementById("resultadoCamara").textContent="🎉 ¡Has practicado todas las palabras! Total registradas: "+practicadas.size+"."}else setTimeout(palabraSiguiente,1000)}
+function cerrarPopup(){document.getElementById("popupCamara").classList.remove("mostrar")}
+async function aceptarCamara(){cerrarPopup();camaraSolicitada=true;await activarCamara()}
+async function activarCamara(){const boton=document.getElementById("botonCamara");if(camaraActiva){detenerCamara();return}try{document.getElementById("estadoCamara").textContent="Solicitando permiso para activar la cámara...";if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error("Abre esta página con Live Server en VS Code o mediante HTTPS.");flujoCamara=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:"user",width:{ideal:640},height:{ideal:480}}});video.srcObject=flujoCamara;await video.play();camaraActiva=true;boton.textContent="⏹ Apagar cámara";document.getElementById("estadoCamara").textContent="Cámara activa. Cargando detector de manos...";if(typeof Hands==="undefined"){document.getElementById("estadoCamara").textContent="La cámara funciona, pero no se cargó el detector de manos. Revisa tu conexión a Internet.";return}detectorManos=new Hands({locateFile:archivo=>"https://cdn.jsdelivr.net/npm/@mediapipe/hands/"+archivo});detectorManos.setOptions({maxNumHands:2,modelComplexity:1,minDetectionConfidence:.6,minTrackingConfidence:.6});detectorManos.onResults(mostrarManos);procesarVideo()}catch(error){detenerCamara();document.getElementById("estadoCamara").textContent="No se pudo activar la cámara: "+error.message;alert("No se pudo activar la cámara.\n\n"+error.message+"\n\n1. Abre el proyecto con Live Server.\n2. Pulsa Permitir en el navegador.\n3. Comprueba que otra aplicación no esté usando la cámara.")}}
+async function procesarVideo(){if(!camaraActiva||!detectorManos||procesandoVideo)return;procesandoVideo=true;try{if(video.readyState>=2)await detectorManos.send({image:video})}catch(e){console.error("Error detectando manos:",e)}finally{procesandoVideo=false;if(camaraActiva)bucleVideo=requestAnimationFrame(procesarVideo)}}
+function mostrarManos(r){if(!video.videoWidth||!video.videoHeight)return;lienzo.width=video.videoWidth;lienzo.height=video.videoHeight;ctx.clearRect(0,0,lienzo.width,lienzo.height);const manos=r.multiHandLandmarks||[];manos.forEach(p=>{if(typeof drawConnectors==="function")drawConnectors(ctx,p,HAND_CONNECTIONS,{color:"#00e676",lineWidth:4});if(typeof drawLandmarks==="function")drawLandmarks(ctx,p,{color:"#ff4081",lineWidth:2,radius:4})});document.getElementById("estadoCamara").textContent=manos.length?"¡Manos detectadas! Practica la seña de "+familia[indiceCamara].palabra+".":"Cámara activa. Coloca tus manos dentro del recuadro."}
+function detenerCamara(){camaraActiva=false;procesandoVideo=false;if(bucleVideo){cancelAnimationFrame(bucleVideo);bucleVideo=null}if(flujoCamara){flujoCamara.getTracks().forEach(t=>t.stop());flujoCamara=null}video.srcObject=null;if(detectorManos){detectorManos.close();detectorManos=null}ctx.clearRect(0,0,lienzo.width,lienzo.height);document.getElementById("botonCamara").textContent="📷 Activar cámara";document.getElementById("estadoCamara").textContent="La cámara está apagada."}
+cargarAprender();iniciarMemoria();nuevaPreguntaQuien();iniciarParejas();siguienteReto();actualizarReferenciaCamara();
+</script>
+</body>
+</html>

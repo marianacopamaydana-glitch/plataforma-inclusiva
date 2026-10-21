@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5 Juegos de Colores - LSB</title>
+<style>
+:root{--m:#5746bd;--m2:#7968e8;--t:#292344;--bg:#f5f3ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--t);background:linear-gradient(135deg,#f5f3ff,#e9f7ff);min-height:100vh}
+header{text-align:center;padding:24px 15px;color:#fff;background:linear-gradient(120deg,var(--m),#8c55c8)}
+header h1{margin:0 0 8px;font-size:clamp(1.5rem,4vw,2.3rem)}header p{margin:0;line-height:1.5}
+main{max-width:1120px;margin:auto;padding:22px 15px 40px}
+.menu-juegos{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:20px}
+.menu-juegos button{min-height:76px;background:#fff;color:var(--m);border:2px solid #ded8ff;border-radius:16px;font-size:1rem;font-weight:bold;padding:12px;cursor:pointer;box-shadow:0 5px 15px #30236e0d;transition:.2s}
+.menu-juegos button:hover,.menu-juegos button.activo{background:var(--m);color:#fff;transform:translateY(-2px)}
+.panel{background:#fff;padding:clamp(15px,3vw,25px);border-radius:20px;box-shadow:0 10px 30px #30236e12}
+.juego{display:none;animation:entrada .3s}.juego.activo{display:block}
+@keyframes entrada{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h2{color:var(--m);text-align:center;margin-top:0}h3{text-align:center}
+button.accion{border:0;border-radius:12px;padding:12px 16px;margin:4px;background:var(--m);color:white;font-weight:bold;font-size:1rem;cursor:pointer;transition:.18s}
+button.accion:hover{background:var(--m2);transform:translateY(-1px)}
+button.sec{background:#6c6680}
+.imagen{width:100%;max-width:340px;height:250px;object-fit:contain;background:#faf9ff;border:2px solid #e5e0ff;border-radius:15px;display:block;margin:12px auto}
+.layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;align-items:start}
+video{width:100%;max-width:500px;aspect-ratio:4/3;object-fit:cover;background:#222;border-radius:15px;display:block;margin:12px auto}
+.centro{text-align:center}.mensaje{padding:12px;border-radius:12px;background:#f1efff;margin:12px 0;line-height:1.5;text-align:center}.ok{background:#e7f8ed;color:#14532d}.error{background:#fff0ef;color:#8f1d16}
+.progreso{height:12px;background:#e4defb;border-radius:99px;overflow:hidden;margin:12px 0}.progreso div{height:100%;width:0;background:linear-gradient(90deg,#7968e8,#20b879);transition:width .3s}
+.opciones{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.nota{font-size:.92rem;line-height:1.6;color:#5a5570}
+.tarjetas-memoria{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:700px;margin:15px auto}
+.carta{min-height:125px;border:2px solid #ded8ff;border-radius:14px;background:#f8f6ff;color:var(--t);font-weight:bold;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
+.carta img{width:100%;height:78px;object-fit:contain}.carta.oculta{background:linear-gradient(135deg,#5746bd,#8c55c8);color:white}.carta.oculta img,.carta.oculta span{visibility:hidden}
+select{padding:10px;border:1px solid #d6cff6;border-radius:10px;font-size:1rem}
+footer{text-align:center;padding:18px;color:#625c78}
+@media(max-width:560px){video{aspect-ratio:3/4}.imagen{height:220px}.tarjetas-memoria{grid-template-columns:repeat(2,minmax(0,1fr))}.carta{min-height:115px}}
+
+/* Fondo para todo el juego */
+body {
+    background-image: url("imagenes/fondomenu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Paneles de los cinco juegos */
+.game,
+.juego,
+.contenedor-juego {
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 18px;
+}
+
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 Cinco juegos de colores en LSB</h1>
+<p>Observa las señas, practica con la cámara y completa los retos.</p>
+</header>
+<main>
+<div class="menu-juegos" aria-label="Elegir juego">
+<button class="activo" onclick="abrirJuego('camara',this)">📸 1. Practica con cámara</button>
+<button onclick="abrirJuego('adivina',this)">🧠 2. Adivina la seña</button>
+<button onclick="abrirJuego('memoria',this)">🃏 3. Memoria de colores</button>
+<button onclick="abrirJuego('encuentra',this)">🎯 4. Encuentra el color</button>
+<button onclick="abrirJuego('secuencia',this)">🌈 5. Ordena la secuencia</button>
+</div>
+
+<section id="camara" class="juego activo">
+<div class="layout">
+<div class="panel centro">
+<h2>📸 Juego 1: Practica con cámara</h2>
+<h3 id="camTitulo">Reto 1 de 6: Amarillo</h3>
+<img id="camImagen" class="imagen" src="imagenes/colores/amarillo.jpeg" alt="Seña de amarillo">
+<div class="progreso"><div id="camBarra"></div></div><p id="camContador">Reto 1 de 6</p>
+<div id="camEstado" class="mensaje">Practica la seña que aparece en la imagen.</div>
+<button class="accion" onclick="siguienteCamara()">✅ Seña practicada — siguiente</button>
+<button class="accion sec" onclick="reiniciarCamara()">↻ Reiniciar retos</button>
+</div>
+<div class="panel centro">
+<h2>Tu cámara</h2><video id="video" autoplay muted playsinline></video>
+<button class="accion" onclick="activarCamara()">📷 Activar cámara</button><button class="accion sec" onclick="detenerCamara()">⏹ Detener cámara</button>
+<div id="estadoCamara" class="mensaje">La cámara está apagada.</div>
+<p class="nota">La cámara muestra tu mano en directo, pero esta versión no determina automáticamente si la seña es correcta. Verifica tu gesto y pulsa el botón para avanzar.</p>
+</div>
+</div>
+</section>
+
+<section id="adivina" class="juego">
+<div class="panel centro"><h2>🧠 Juego 2: Adivina la seña</h2><p>Observa la imagen y elige el nombre del color.</p>
+<img id="adImagen" class="imagen" src="imagenes/colores/amarillo.jpeg" alt="Seña para adivinar">
+<div id="adOpciones" class="opciones"></div><div id="adEstado" class="mensaje">¡Elige una respuesta!</div>
+<button class="accion" onclick="nuevaAdivinanza()">Otra pregunta ➜</button></div>
+</section>
+
+<section id="memoria" class="juego">
+<div class="panel centro"><h2>🃏 Juego 3: Memoria de colores</h2><p>Encuentra las parejas: una tarjeta muestra la seña y otra el nombre del color.</p>
+<p id="memEstado" class="mensaje">Encuentra las seis parejas.</p><div id="tableroMemoria" class="tarjetas-memoria"></div>
+<button class="accion" onclick="iniciarMemoria()">↻ Volver a mezclar</button></div>
+</section>
+
+<section id="encuentra" class="juego">
+<div class="panel centro"><h2>🎯 Juego 4: Encuentra el color</h2><p id="enunciadoEncuentra">Busca la seña de Amarillo entre las imágenes.</p>
+<div id="opcionesEncuentra" class="opciones"></div><div id="encEstado" class="mensaje">Selecciona la imagen correcta.</div>
+<button class="accion" onclick="nuevaBusqueda()">Nuevo reto ➜</button></div>
+</section>
+
+<section id="secuencia" class="juego">
+<div class="panel centro"><h2>🌈 Juego 5: Ordena la secuencia</h2><p>Memoriza la secuencia de colores que aparece y luego repítela en el mismo orden.</p>
+<div id="seqVista" class="mensaje">Pulsa “Mostrar secuencia” para empezar.</div>
+<div id="seqOpciones" class="opciones"></div><div id="seqEstado" class="mensaje">Secuencia: 0 de 4</div>
+<button class="accion" onclick="iniciarSecuencia()">Mostrar secuencia</button><button class="accion sec" onclick="reiniciarSecuencia()">Reiniciar</button></div>
+</section>
+</main>
+<footer>Plataforma educativa inclusiva · Lengua de Señas Boliviana</footer>
+<script>
+const colores=[
+{nombre:"Amarillo",archivo:"imagenes/colores/amarillo.jpeg",emoji:"🟡"},
+{nombre:"Azul",archivo:"imagenes/colores/azul.jpeg",emoji:"🔵"},
+{nombre:"Morado",archivo:"imagenes/colores/morado.jpeg",emoji:"🟣"},
+{nombre:"Naranja",archivo:"imagenes/colores/naranja.jpeg",emoji:"🟠"},
+{nombre:"Rojo",archivo:"imagenes/colores/rojo.jpeg",emoji:"🔴"},
+{nombre:"Verde",archivo:"imagenes/colores/verde.jpeg",emoji:"🟢"}
+];
+let camIndice=0,flujoCamara=null,adCorrecta=null,enCorrecto=null,memPrimera=null,memBloqueo=false,memParejas=0,seq=[],seqUsuario=[],seqBloqueado=false;
+function abrirJuego(id,boton){document.querySelectorAll(".juego").forEach(x=>x.classList.remove("activo"));document.getElementById(id).classList.add("activo");document.querySelectorAll(".menu-juegos button").forEach(x=>x.classList.remove("activo"));if(boton)boton.classList.add("activo");}
+function mostrarCamaraReto(){const titulo=document.getElementById("camTitulo"),img=document.getElementById("camImagen"),estado=document.getElementById("camEstado");document.getElementById("camBarra").style.width=(camIndice/colores.length*100)+"%";if(camIndice>=colores.length){titulo.textContent="🎉 ¡Terminaste los seis retos!";img.style.display="none";document.getElementById("camContador").textContent="6 de 6 completados";document.getElementById("camBarra").style.width="100%";estado.className="mensaje ok";estado.textContent="¡Excelente! Practicaste todos los colores.";return;}const c=colores[camIndice];titulo.textContent=`Reto ${camIndice+1} de ${colores.length}: ${c.nombre}`;img.style.display="block";img.src=c.archivo;img.alt="Seña de "+c.nombre;img.onerror=()=>{estado.className="mensaje error";estado.textContent="No se encontró "+c.archivo+". Revisa el nombre y la carpeta.";};document.getElementById("camContador").textContent=`Reto ${camIndice+1} de ${colores.length}`;estado.className="mensaje";estado.textContent="Practica la seña de "+c.nombre+" y luego pulsa siguiente."}
+function siguienteCamara(){if(camIndice>=colores.length)camIndice=0;else camIndice++;mostrarCamaraReto()}
+function reiniciarCamara(){camIndice=0;mostrarCamaraReto()}
+async function activarCamara(){const v=document.getElementById("video"),s=document.getElementById("estadoCamara");if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){s.className="mensaje error";s.textContent="Abre el archivo con VS Code Live Server o HTTPS para permitir la cámara.";return}try{detenerCamara();flujoCamara=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});v.srcObject=flujoCamara;await v.play();s.className="mensaje ok";s.textContent="Cámara activada. Practica mirando la imagen de referencia."}catch(e){s.className="mensaje error";s.textContent="No se pudo activar. Revisa los permisos de cámara del navegador."}}
+function detenerCamara(){if(flujoCamara){flujoCamara.getTracks().forEach(t=>t.stop());flujoCamara=null}const v=document.getElementById("video");if(v)v.srcObject=null;const s=document.getElementById("estadoCamara");if(s){s.className="mensaje";s.textContent="La cámara está apagada."}}
+function barajar(arr){return [...arr].sort(()=>Math.random()-.5)}
+function nuevaAdivinanza(){adCorrecta=colores[Math.floor(Math.random()*colores.length)];const img=document.getElementById("adImagen");img.src=adCorrecta.archivo;img.alt="Seña para adivinar";const ops=barajar(colores).slice(0,4);if(!ops.some(c=>c.nombre===adCorrecta.nombre))ops[0]=adCorrecta;const box=document.getElementById("adOpciones");box.innerHTML="";barajar(ops).forEach(c=>{const b=document.createElement("button");b.className="accion";b.textContent=c.nombre;b.onclick=()=>{const s=document.getElementById("adEstado");if(c.nombre===adCorrecta.nombre){s.className="mensaje ok";s.textContent="¡Correcto! Es "+c.nombre+"."}else{s.className="mensaje error";s.textContent="No es ese color. Inténtalo otra vez."}};box.appendChild(b)});const s=document.getElementById("adEstado");s.className="mensaje";s.textContent="¿Qué color es?"}
+function iniciarMemoria(){const items=[];colores.forEach((c,i)=>{items.push({id:c.nombre+"-img",nombre:c.nombre,archivo:c.archivo,pareja:c.nombre,imagen:true});items.push({id:c.nombre+"-txt",nombre:c.nombre,pareja:c.nombre,imagen:false})});const mezclados=barajar(items);const box=document.getElementById("tableroMemoria");box.innerHTML="";memPrimera=null;memBloqueo=false;memParejas=0;document.getElementById("memEstado").className="mensaje";document.getElementById("memEstado").textContent="Encuentra las seis parejas.";mezclados.forEach(item=>{const b=document.createElement("button");b.className="carta oculta";b.dataset.pareja=item.pareja;b.dataset.id=item.id;if(item.imagen){const im=document.createElement("img");im.src=item.archivo;im.alt="Seña de "+item.nombre;b.appendChild(im)}else{const sp=document.createElement("span");sp.textContent=item.nombre;b.appendChild(sp)}b.onclick=()=>voltearCarta(b);box.appendChild(b)})}
+function voltearCarta(b){if(memBloqueo||!b.classList.contains("oculta"))return;b.classList.remove("oculta");if(!memPrimera){memPrimera=b;return}if(memPrimera.dataset.pareja===b.dataset.pareja&&memPrimera.dataset.id!==b.dataset.id){memPrimera.disabled=true;b.disabled=true;memPrimera=null;memParejas++;document.getElementById("memEstado").className="mensaje ok";document.getElementById("memEstado").textContent=memParejas===6?"🎉 ¡Encontraste todas las parejas!":"¡Pareja encontrada! "+memParejas+" de 6.";if(memParejas===6)document.getElementById("memEstado").textContent="🎉 ¡Ganaste! Encontraste todas las parejas."}else{memBloqueo=true;const anterior=memPrimera;memPrimera=null;setTimeout(()=>{anterior.classList.add("oculta");b.classList.add("oculta");memBloqueo=false},800)}}
+function nuevaBusqueda(){enCorrecto=colores[Math.floor(Math.random()*colores.length)];document.getElementById("enunciadoEncuentra").textContent="Encuentra la imagen de la seña: "+enCorrecto.nombre;const ops=barajar(colores).slice(0,3);if(!ops.some(c=>c.nombre===enCorrecto.nombre))ops[0]=enCorrecto;const box=document.getElementById("opcionesEncuentra");box.innerHTML="";barajar(ops).forEach(c=>{const b=document.createElement("button");b.className="carta";const im=document.createElement("img");im.src=c.archivo;im.alt="Seña de "+c.nombre;const sp=document.createElement("span");sp.textContent="Elegir imagen";b.append(im,sp);b.onclick=()=>{const s=document.getElementById("encEstado");if(c.nombre===enCorrecto.nombre){s.className="mensaje ok";s.textContent="¡Muy bien! Encontraste "+c.nombre+"."}else{s.className="mensaje error";s.textContent="Todavía no. Vuelve a observar las señas."}};box.appendChild(b)});const s=document.getElementById("encEstado");s.className="mensaje";s.textContent="Selecciona la imagen correcta."}
+function iniciarSecuencia(){seq=Array.from({length:4},()=>colores[Math.floor(Math.random()*colores.length)]);seqUsuario=[];seqBloqueado=true;document.getElementById("seqVista").textContent=seq.map(c=>c.emoji+" "+c.nombre).join("  →  ");document.getElementById("seqEstado").textContent="Memoriza los cuatro colores…";document.getElementById("seqOpciones").innerHTML="";setTimeout(()=>{document.getElementById("seqVista").textContent="Ahora repite el orden tocando los colores.";crearOpcionesSecuencia();seqBloqueado=false;actualizarSecuencia()},2200)}
+function crearOpcionesSecuencia(){const box=document.getElementById("seqOpciones");box.innerHTML="";barajar(colores).forEach(c=>{const b=document.createElement("button");b.className="accion";b.textContent=c.emoji+" "+c.nombre;b.onclick=()=>seleccionarSecuencia(c);box.appendChild(b)})}
+function seleccionarSecuencia(c){if(seqBloqueado||seqUsuario.length>=seq.length)return;const pos=seqUsuario.length;seqUsuario.push(c);if(seq[pos].nombre!==c.nombre){document.getElementById("seqEstado").className="mensaje error";document.getElementById("seqEstado").textContent="Ese no era el siguiente color. Pulsa “Mostrar secuencia” para intentarlo otra vez.";seqBloqueado=true;return}actualizarSecuencia();if(seqUsuario.length===seq.length){document.getElementById("seqEstado").className="mensaje ok";document.getElementById("seqEstado").textContent="🎉 ¡Perfecto! Repetiste toda la secuencia.";seqBloqueado=true}}
+function actualizarSecuencia(){const s=document.getElementById("seqEstado");s.className="mensaje";s.textContent="Secuencia: "+seqUsuario.length+" de "+seq.length+" correctos."}
+function reiniciarSecuencia(){seq=[];seqUsuario=[];seqBloqueado=false;document.getElementById("seqVista").textContent="Pulsa “Mostrar secuencia” para empezar.";document.getElementById("seqEstado").className="mensaje";document.getElementById("seqEstado").textContent="Secuencia: 0 de 4";document.getElementById("seqOpciones").innerHTML=""}
+window.addEventListener("beforeunload",()=>{if(flujoCamara)flujoCamara.getTracks().forEach(t=>t.stop())});
+mostrarCamaraReto();nuevaAdivinanza();iniciarMemoria();nuevaBusqueda();
+</script>
+</body>
+</html>

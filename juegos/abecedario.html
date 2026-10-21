@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LSB | Juegos Inclusivos</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+
+<style>
+*{box-sizing:border-box}
+:root{--morado:#7928ca;--azul:#3567ed;--texto:#292343}
+body{
+ margin:0;min-height:100vh;font-family:Segoe UI,Arial,sans-serif;color:var(--texto);
+ background:linear-gradient(135deg,#100a2bcc,#32136dcc),url("imagenes/fondo.jpg") center/cover fixed,#211044
+}
+header{display:flex;justify-content:center;align-items:center;gap:18px;padding:25px;color:white}
+.logo{display:grid;place-items:center;width:70px;height:70px;border-radius:20px;background:linear-gradient(135deg,#a855f7,#3584ff);font-size:27px;font-weight:bold}
+header h1{margin:0 0 5px;font-size:clamp(25px,4vw,38px)}
+header p{margin:0;color:#e4ddff}
+.menu{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;padding:15px;background:#160e32eF;position:sticky;top:0;z-index:10}
+.menu button{border:1px solid #ffffff44;border-radius:12px;padding:12px 16px;color:white;background:#ffffff12;font-weight:bold;cursor:pointer}
+.menu button:hover,.menu button.seleccionado{background:linear-gradient(135deg,var(--morado),var(--azul))}
+.contenedor{width:min(1100px,94%);margin:28px auto}
+.presentacion{padding:32px 22px;margin-bottom:22px;text-align:center;border-radius:24px;color:white;background:linear-gradient(120deg,#742ed3ed,#2868dfed);box-shadow:0 15px 35px #0004}
+.presentacion h2{font-size:clamp(25px,4vw,38px);margin:15px 0 8px}
+.presentacion p{line-height:1.6}
+.etiqueta{display:inline-block;padding:7px 13px;border:1px solid #ffffff70;border-radius:30px;font-size:12px;letter-spacing:1px}
+.juego{display:none;padding:clamp(18px,4vw,35px);background:white;border-radius:24px;box-shadow:0 16px 45px #0004}
+.juego.activo{display:block;animation:aparecer .25s ease}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.titulo{display:flex;align-items:center;gap:15px;margin-bottom:22px}
+.icono{display:grid;place-items:center;width:58px;height:58px;flex-shrink:0;border-radius:17px;background:#eee7ff;font-size:29px}
+.titulo h2{margin:0 0 5px;font-size:clamp(20px,3vw,27px)}
+.titulo p{margin:0;color:#716a89}
+.boton,.opciones button{border:0;border-radius:12px;padding:12px 17px;margin:5px 4px 5px 0;font-weight:bold;cursor:pointer;transition:.2s}
+.boton:hover,.opciones button:hover{transform:translateY(-2px)}
+.principal{color:white;background:linear-gradient(135deg,var(--morado),var(--azul))}
+.secundario{color:#5821a5;background:#eee7ff;border:1px solid #d9c9ff}
+.peligro{color:white;background:#c92a2a}
+.ancho{display:block;width:100%;margin:8px 0}
+.estadistica{display:inline-block;padding:10px 16px;margin:10px 0 18px;border-radius:12px;background:#f0e9ff;color:#4d218f}
+.mensaje{min-height:24px;font-weight:bold;line-height:1.5;color:#5d259e}
+.tablero{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0 20px}
+.tarjeta{display:grid;place-items:center;min-height:125px;border:2px solid #e4d8ff;border-radius:16px;background:linear-gradient(145deg,#f8f5ff,#e9e2ff);color:#6f2bc1;font-size:32px;font-weight:900;cursor:pointer;overflow:hidden}
+.tarjeta:disabled{background:#e7fff4;border-color:#a8e6d0}
+.imagen-sena{display:block;width:100%;max-width:230px;height:210px;object-fit:contain;margin:auto}
+.tarjeta .imagen-sena{height:105px;padding:4px}
+.letra-grande{display:grid;place-items:center;font-size:85px;font-weight:900;color:#7a2dcc}
+.reto{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;gap:25px}
+.zona-imagen{display:grid;place-items:center;min-height:220px;padding:15px;border:2px dashed #d7c6ff;border-radius:20px;background:#faf8ff}
+.opciones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}
+.opciones button{margin:0;padding:18px;color:#5725a2;background:#eee7ff;border:1px solid #d9c9ff;font-size:24px}
+.palabra{margin:20px auto;text-align:center;color:#762cc7;font-size:clamp(36px,7vw,64px);font-weight:900;letter-spacing:5px}
+.campo{display:block;width:min(100%,420px);margin:15px 0;padding:14px 16px;border:2px solid #d9ccf6;border-radius:12px;outline:none;font-size:17px}
+.campo:focus{border-color:#7b35d1}
+.reto-camara{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(210px,1fr);gap:22px;align-items:start}
+.marco{position:relative;min-height:280px;overflow:hidden;border:3px solid #7e49da;border-radius:20px;background:#100b25;aspect-ratio:4/3}
+#camara,#lienzo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#camara{transform:scaleX(-1)}
+#lienzo{pointer-events:none}
+.aviso{position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;color:white;background:#17102b88;z-index:2}
+.panel{padding:17px;border-radius:18px;background:#f7f3ff}
+.letra-camara{margin:4px;color:#752ec6;text-align:center;font-size:72px;font-weight:900}
+.pequena{min-height:100px;margin-bottom:12px}
+.pequena .imagen-sena{height:100px}
+.nota{padding:12px 15px;color:#594775;background:#f4efff;border-left:4px solid #7c3bd0;border-radius:8px;line-height:1.5}
+footer{text-align:center;padding:20px;color:#e9e2ff}
+@media(max-width:700px){
+ .menu{position:static}.menu button{flex:1 1 135px}
+ .reto,.reto-camara{grid-template-columns:1fr}
+ .tablero{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .tarjeta{min-height:95px}
+ header{gap:12px}.logo{width:58px;height:58px}
+}
+
+/* Imágenes de las letras que forman cada palabra */
+.palabra-imagenes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.tarjeta-letra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 125px;
+  min-height: 145px;
+  padding: 8px;
+  background: linear-gradient(145deg, #f8f5ff, #e9e2ff);
+  border: 2px solid #d7c6ff;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px #542b8b18;
+}
+
+.tarjeta-letra .imagen-sena {
+  width: 100%;
+  height: 125px;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .tarjeta-letra {
+    width: 85px;
+    min-height: 105px;
+  }
+
+  .tarjeta-letra .imagen-sena {
+    height: 85px;
+  }
+}
+/* Fondo para todo el juego */
+body {
+    background-image: url("imagenes/fondomenu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Paneles de los cinco juegos */
+.game,
+.juego,
+.contenedor-juego {
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 18px;
+}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="logo">🤟 LSB</div>
+ <div><h1>Juegos Inclusivos</h1><p>Aprender lengua de señas jugando</p></div>
+</header>
+
+<nav class="menu">
+ <button class="seleccionado" data-juego="j1">🧠 Memoria</button>
+ <button data-juego="j2">👀 Identifica</button>
+ <button data-juego="j3">🔤 Palabras</button>
+ <button data-juego="j4">🎯 Adivina</button>
+ <button data-juego="j5">📷 Cámara</button>
+</nav>
+
+<main class="contenedor">
+ <section class="presentacion">
+  <span class="etiqueta">APRENDE · PRACTICA · INCLUYE</span>
+  <h2>¡Tus manos también pueden comunicar!</h2>
+  <p>Descubre las letras, ejercita tu memoria y aprende sobre la lengua de señas.</p>
+ </section>
+
+ <section class="juego activo" id="j1">
+  <div class="titulo"><span class="icono">🧠</span><div><h2>Memoria de señas</h2><p>Encuentra las parejas de letras iguales.</p></div></div>
+  <div class="estadistica">Puntos: <strong id="p1">0</strong></div>
+  <div id="memoria" class="tablero"></div>
+  <p id="m1" class="mensaje" aria-live="polite"></p>
+  <button class="boton principal" id="reiniciar1">🔄 Reiniciar</button>
+ </section>
+
+ <section class="juego" id="j2">
+  <div class="titulo"><span class="icono">👀</span><div><h2>Identifica la seña</h2><p>Mira la imagen y elige la letra correcta.</p></div></div>
+  <div class="reto"><div id="img2" class="zona-imagen"></div><div><p>¿Qué letra representa esta seña?</p><div id="op2" class="opciones"></div></div></div>
+  <div class="estadistica">Puntos: <strong id="p2">0</strong></div>
+  <p id="m2" class="mensaje" aria-live="polite"></p>
+  <button class="boton principal" id="siguiente2">➡️ Siguiente letra</button>
+ </section>
+
+ 
+<!-- JUEGO 3: FORMA LA PALABRA CON IMÁGENES -->
+<section class="juego" id="j3">
+  <div class="titulo">
+    <span class="icono">🔤</span>
+    <div>
+      <h2>Juego 3: Forma la palabra</h2>
+      <p>Observa las señas y descubre qué palabra forman.</p>
+    </div>
+  </div>
+
+  <div class="palabra-imagenes" id="imagenesPalabra"></div>
+
+  <input
+    class="campo"
+    id="r3"
+    type="text"
+    maxlength="20"
+    placeholder="Escribe la palabra"
+    autocomplete="off"
+  >
+
+  <button class="boton principal" id="comprobar3">Comprobar</button>
+  <button class="boton secundario" id="siguiente3">Nueva palabra</button>
+
+  <div class="estadistica">
+    Puntos: <strong id="p3">0</strong>
+  </div>
+
+  <p id="m3" class="mensaje" aria-live="polite"></p>
+</section>
+
+
+ <section class="juego" id="j4">
+  <div class="titulo"><span class="icono">🎯</span><div><h2>Adivina la letra</h2><p>Observa la imagen y escribe la letra.</p></div></div>
+  <div id="img4" class="zona-imagen"></div>
+  <input class="campo" id="r4" maxlength="1" placeholder="Escribe una letra" autocomplete="off">
+  <button class="boton principal" id="comprobar4">Comprobar</button>
+  <button class="boton secundario" id="siguiente4">Siguiente reto</button>
+  <div class="estadistica">Puntos: <strong id="p4">0</strong></div>
+  <p id="m4" class="mensaje" aria-live="polite"></p>
+ </section>
+
+ <section class="juego" id="j5">
+  <div class="titulo"><span class="icono">📷</span><div><h2>Practica con cámara</h2><p>Coloca tu mano frente a la cámara y observa sus puntos.</p></div></div>
+  <div class="reto-camara">
+   <div class="marco">
+    <video id="camara" autoplay playsinline muted></video>
+    <canvas id="lienzo"></canvas>
+    <div id="aviso" class="aviso">Pulsa “Activar cámara” para comenzar.</div>
+   </div>
+   <div class="panel">
+    <p style="text-align:center">Practica esta letra</p>
+    <div id="letraCamara" class="letra-camara">A</div>
+    <div id="imgc" class="zona-imagen pequena"></div>
+    <button class="boton principal ancho" id="activarCamara">📷 Activar cámara</button>
+    <button class="boton secundario ancho" id="siguienteC">➡️ Siguiente letra</button>
+    <button class="boton peligro ancho" id="detenerCamara">⏹ Detener cámara</button>
+    <p id="mc" class="mensaje" aria-live="polite">La cámara está apagada.</p>
+   </div>
+  </div>
+  <p class="nota">Los puntos muestran las articulaciones detectadas de la mano. No verifican por sí solos si la seña de LSB es correcta.</p>
+ </section>
+</main>
+
+<!-- Imágenes: las rutas deben coincidir con tus archivos -->
+<div id="imagenes-abecedario" hidden>
+ <img id="img-A" src="imagenes/abecedario/A.png" alt="">
+ <img id="img-B" src="imagenes/abecedario/B.png" alt="">
+ <img id="img-C" src="imagenes/abecedario/C.png" alt="">
+ <img id="img-D" src="imagenes/abecedario/D.png" alt="">
+ <img id="img-E" src="imagenes/abecedario/E.png" alt="">
+ <img id="img-F" src="imagenes/abecedario/F.png" alt="">
+ <img id="img-G" src="imagenes/abecedario/G.png" alt="">
+ <img id="img-H" src="imagenes/abecedario/H.png" alt="">
+ <img id="img-I" src="imagenes/abecedario/I.png" alt="">
+ <img id="img-J" src="imagenes/abecedario/J.png" alt="">
+ <img id="img-K" src="imagenes/abecedario/K.png" alt="">
+ <img id="img-L" src="imagenes/abecedario/L.png" alt="">
+ <img id="img-M" src="imagenes/abecedario/M.png" alt="">
+ <img id="img-N" src="imagenes/abecedario/N.png" alt="">
+ <img id="img-O" src="imagenes/abecedario/O.png" alt="">
+ <img id="img-P" src="imagenes/abecedario/P.png" alt="">
+ <img id="img-Q" src="imagenes/abecedario/Q.png" alt="">
+ <img id="img-R" src="imagenes/abecedario/R.png" alt="">
+ <img id="img-S" src="imagenes/abecedario/S.png" alt="">
+ <img id="img-T" src="imagenes/abecedario/T.png" alt="">
+ <img id="img-U" src="imagenes/abecedario/U.png" alt="">
+ <img id="img-V" src="imagenes/abecedario/V.png" alt="">
+ <img id="img-W" src="imagenes/abecedario/W.png" alt="">
+ <img id="img-X" src="imagenes/abecedario/X.png" alt="">
+ <img id="img-Y" src="imagenes/abecedario/Y.png" alt="">
+ <img id="img-Z" src="imagenes/abecedario/Z.png" alt="">
+</div>
+
+<footer>💜 Educación inclusiva · Lengua de Señas Boliviana</footer>
+
+<script>
+"use strict";
+
+const letras="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const $=id=>document.getElementById(id);
+const mezclar=lista=>{
+ const a=[...lista];
+ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+ return a;
+};
+
+document.querySelectorAll(".menu button").forEach(b=>{
+ b.addEventListener("click",()=>{
+  document.querySelectorAll(".juego").forEach(j=>j.classList.toggle("activo",j.id===b.dataset.juego));
+  document.querySelectorAll(".menu button").forEach(x=>x.classList.toggle("seleccionado",x===b));
+ });
+});
+
+function crearImagen(letra){
+ const original=$("img-"+letra),img=document.createElement("img");
+ img.className="imagen-sena";img.alt="Seña de "+letra;
+ img.src=original?original.getAttribute("src"):"";
+ img.onerror=()=>{
+  const span=document.createElement("span");
+  span.className="letra-grande";span.textContent=letra;img.replaceWith(span);
+ };
+ return img;
+}
+function mostrarImagen(id,letra){$(id).replaceChildren(crearImagen(letra));}
+
+/* Juego 1: memoria */
+let puntos1=0,primera=null,bloqueado=false;
+function iniciarMemoria(){
+ puntos1=0;primera=null;bloqueado=false;$("p1").textContent="0";$("m1").textContent="";
+ $("memoria").replaceChildren();
+ mezclar(["A","B","C","D","E","F","A","B","C","D","E","F"]).forEach(letra=>{
+  const b=document.createElement("button");b.className="tarjeta";b.type="button";b.textContent="?";b.dataset.letra=letra;
+  b.onclick=()=>{
+   if(bloqueado||b.dataset.abierta||b===primera)return;
+   b.dataset.abierta="1";b.replaceChildren(crearImagen(letra));
+   if(!primera){primera=b;return;}
+   const anterior=primera;primera=null;
+   if(anterior.dataset.letra===letra){
+    puntos1+=10;$("p1").textContent=puntos1;anterior.disabled=true;b.disabled=true;$("m1").textContent="¡Pareja encontrada! 🎉";
+    if($("memoria").querySelectorAll("button:disabled").length===12)$("m1").textContent="🏆 ¡Ganaste! Completaste todas las parejas.";
+   }else{
+    bloqueado=true;$("m1").textContent="No coinciden. Intenta de nuevo.";
+    setTimeout(()=>{anterior.textContent="?";b.textContent="?";delete anterior.dataset.abierta;delete b.dataset.abierta;bloqueado=false;},900);
+   }
+  };
+  $("memoria").appendChild(b);
+ });
+}
+$("reiniciar1").onclick=iniciarMemoria;
+
+/* Juego 2: identifica */
+let letra2="",puntos2=0,respondida2=false;
+function nueva2(){
+ letra2=letras[Math.floor(Math.random()*26)];respondida2=false;mostrarImagen("img2",letra2);$("m2").textContent="";
+ $("op2").replaceChildren();
+ mezclar([letra2,...mezclar(letras.filter(l=>l!==letra2)).slice(0,3)]).forEach(l=>{
+  const b=document.createElement("button");b.textContent=l;
+  b.onclick=()=>{
+   if(respondida2)return;respondida2=true;
+   if(l===letra2){puntos2+=10;$("p2").textContent=puntos2;$("m2").textContent="✅ ¡Correcto! +10 puntos."}
+   else $("m2").textContent="❌ La respuesta era "+letra2+".";
+  };
+  $("op2").appendChild(b);
+ });
+}
+$("siguiente2").onclick=nueva2;
+
+/* Juego 3: palabras */
+
+/* JUEGO 3: FORMA LA PALABRA CON IMÁGENES */
+
+const palabras = ["CASA", "MAMA", "PAPA", "BEBE", "CAMA", "LOBO"];
+
+let palabraActual = "";
+let puntos3 = 0;
+let respondida3 = false;
+
+function nueva3() {
+  const disponibles = palabras.filter(
+    palabra => palabra !== palabraActual
+  );
+
+  palabraActual =
+    disponibles[Math.floor(Math.random() * disponibles.length)];
+
+  respondida3 = false;
+  $("r3").value = "";
+  $("m3").textContent = "";
+
+  const contenedor = $("imagenesPalabra");
+  contenedor.replaceChildren();
+
+  // Mostrar una imagen por cada letra de la palabra.
+  [...palabraActual].forEach(letra => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "tarjeta-letra";
+
+    tarjeta.appendChild(crearImagen(letra));
+    contenedor.appendChild(tarjeta);
+  });
+}
+
+function comprobar3() {
+  if (respondida3) return;
+
+  const respuesta = $("r3").value
+    .trim()
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  if (respuesta === palabraActual) {
+    respondida3 = true;
+    puntos3 += 10;
+    $("p3").textContent = puntos3;
+    $("m3").textContent = "🎉 ¡Correcto! Ganaste 10 puntos.";
+  } else {
+    $("m3").textContent = "❌ Esa no es la palabra. ¡Inténtalo otra vez!";
+  }
+}
+
+$("comprobar3").addEventListener("click", comprobar3);
+$("siguiente3").addEventListener("click", nueva3);
+
+$("r3").addEventListener("keydown", evento => {
+  if (evento.key === "Enter") comprobar3();
+});
+
+nueva3();
+
+
+/* Juego 4: adivina */
+let letra4="",puntos4=0,respondida4=false;
+function nueva4(){
+ letra4=letras[Math.floor(Math.random()*26)];respondida4=false;mostrarImagen("img4",letra4);$("r4").value="";$("m4").textContent="";
+}
+function comprobar4(){
+ if(respondida4)return;
+ if($("r4").value.trim().toUpperCase()===letra4){
+  respondida4=true;puntos4+=10;$("p4").textContent=puntos4;$("m4").textContent="✅ ¡Correcto! +10 puntos.";
+ }else $("m4").textContent="❌ Revisa la letra e inténtalo de nuevo.";
+}
+$("comprobar4").onclick=comprobar4;$("siguiente4").onclick=nueva4;
+$("r4").addEventListener("keydown",e=>{if(e.key==="Enter")comprobar4()});
+
+/* Juego 5: cámara y puntos de la mano */
+let flujo=null,camaraMP=null,detector=null,letraC="A",procesando=false;
+const conexiones=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
+
+function actualizarC(){ $("letraCamara").textContent=letraC;mostrarImagen("imgc",letraC); }
+function dibujarMano(puntos){
+ const video=$("camara"),canvas=$("lienzo"),ctx=canvas.getContext("2d");
+ if(!video.videoWidth||!video.videoHeight)return;
+ if(canvas.width!==video.videoWidth||canvas.height!==video.videoHeight){canvas.width=video.videoWidth;canvas.height=video.videoHeight;}
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ if(!puntos)return;
+ const xy=p=>({x:(1-p.x)*canvas.width,y:p.y*canvas.height});
+ ctx.lineWidth=4;ctx.strokeStyle="#42f5b0";ctx.fillStyle="#ffdf45";
+ conexiones.forEach(([a,b])=>{const p=xy(puntos[a]),q=xy(puntos[b]);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();});
+ puntos.forEach((p,i)=>{const q=xy(p);ctx.beginPath();ctx.arc(q.x,q.y,i===0?7:5,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#4b237f";ctx.lineWidth=1.5;ctx.stroke();});
+}
+
+async function activarCamara(){
+ if(flujo)return;
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+  $("mc").textContent="Abre la página con Live Server o HTTPS.";return;
+ }
+ $("mc").textContent="Solicitando permiso para usar la cámara...";
+ $("aviso").textContent="Preparando cámara...";
+ $("aviso").style.display="grid";
+ try{
+  flujo=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});
+  $("camara").srcObject=flujo;await $("camara").play();
+  if(typeof Hands==="undefined"||typeof Camera==="undefined"){
+   $("mc").textContent="Cámara activa, pero MediaPipe no se cargó. Revisa internet.";
+   $("aviso").textContent="No se pudo cargar el detector de manos.";return;
+  }
+  detector=new Hands({locateFile:f=>"https://cdn.jsdelivr.net/npm/@mediapipe/hands/"+f});
+  detector.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.65,minTrackingConfidence:.6});
+  detector.onResults(r=>{
+   const mano=r.multiHandLandmarks&&r.multiHandLandmarks.length?r.multiHandLandmarks[0]:null;
+   dibujarMano(mano);
+   if(mano){
+    $("aviso").style.display="none";
+    $("mc").textContent="✋ Mano detectada. Practica la letra "+letraC+".";
+   }else{
+    $("aviso").style.display="grid";
+    $("aviso").textContent="Coloca tu mano completa frente a la cámara.";
+    $("mc").textContent="Buscando tu mano...";
+   }
+  });
+  camaraMP=new Camera($("camara"),{
+   onFrame:async()=>{
+    if(!detector||procesando||!flujo)return;
+    procesando=true;
+    try{await detector.send({image:$("camara")})}
+    catch(e){console.error(e)}
+    finally{procesando=false}
+   },width:640,height:480
+  });
+  await camaraMP.start();
+  $("mc").textContent="Cámara activa. Coloca tu mano frente a ella.";
+ }catch(e){
+  console.error(e);detenerCamara();
+  $("mc").textContent="No se pudo abrir la cámara. Permite el acceso en el navegador.";
+  $("aviso").textContent="No se pudo activar la cámara.";
+ }
+}
+
+function detenerCamara(){
+ if(camaraMP&&typeof camaraMP.stop==="function")camaraMP.stop();
+ camaraMP=null;detector=null;procesando=false;
+ if(flujo){flujo.getTracks().forEach(t=>t.stop());flujo=null;}
+ $("camara").srcObject=null;
+ const canvas=$("lienzo"),ctx=canvas.getContext("2d");ctx.clearRect(0,0,canvas.width,canvas.height);
+ $("aviso").style.display="grid";$("aviso").textContent="Pulsa “Activar cámara” para comenzar.";
+ $("mc").textContent="Cámara apagada.";
+}
+function siguienteC(){
+ letraC=letras[(letras.indexOf(letraC)+1)%letras.length];
+ actualizarC();$("mc").textContent="Practica la letra "+letraC+".";
+}
+$("activarCamara").onclick=activarCamara;
+$("detenerCamara").onclick=detenerCamara;
+$("siguienteC").onclick=siguienteC;
+window.addEventListener("beforeunload",detenerCamara);
+
+/* Iniciar juegos */
+iniciarMemoria();nueva2();nueva3();nueva4();actualizarC();
+</script>
+</body>
+</html>

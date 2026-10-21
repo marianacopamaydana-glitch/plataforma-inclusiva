@@ -1,0 +1,806 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juegos visuales de Lengua de Señas</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+<style>
+:root{
+  --morado:#6c35c9;
+  --oscuro:#432080;
+  --rosa:#ff72b6;
+  --azul:#448dff;
+  --verde:#16a36a;
+  --rojo:#e84a67;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Segoe UI",Arial,sans-serif;
+  color:#30254a;
+  background:linear-gradient(135deg,#f2edff,#e9f4ff,#fff0f8);
+}
+header{
+  padding:30px 15px;
+  text-align:center;
+  color:white;
+  background:linear-gradient(120deg,#49218d,#7541d8,#3687f6);
+  border-radius:0 0 30px 30px;
+}
+header h1{margin:0 0 8px;font-size:clamp(25px,4vw,39px)}
+.contenedor{width:min(1200px,94%);margin:auto;padding:20px 0 40px}
+.menu{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  gap:9px;margin-bottom:22px;
+}
+button{
+  border:0;border-radius:12px;padding:11px 15px;
+  font-weight:bold;cursor:pointer;transition:.2s;
+}
+button:hover{transform:translateY(-2px)}
+button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.menu button{background:white;color:var(--oscuro);border:2px solid #e0d4ff}
+.menu button.activo,.btn-principal{background:var(--morado);color:white}
+.btn-rosa{background:var(--rosa);color:white}
+.btn-azul{background:var(--azul);color:white}
+.btn-rojo{background:var(--rojo);color:white}
+.seccion{display:none}
+.seccion.visible{display:block;animation:aparecer .25s}
+@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel{
+  background:#ffffffed;border:1px solid #e5dcff;padding:22px;
+  border-radius:22px;margin-bottom:20px;
+  box-shadow:0 8px 25px #43208010;
+}
+h2,h3{color:var(--oscuro)}
+.subtexto{color:#716781;line-height:1.6}
+.centro{text-align:center}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+.tarjeta{
+  background:white;border:2px solid #e7ddff;
+  border-radius:18px;padding:13px;text-align:center;
+}
+.tarjeta img{
+  width:100%;height:170px;object-fit:contain;
+  border-radius:12px;background:#f8f5ff;
+}
+.tarjeta h3{font-size:15px}
+.opciones{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;margin:20px auto;max-width:760px;
+}
+.opcion-imagen{
+  min-width:0;min-height:145px;padding:9px;
+  background:white;border:3px solid #e0d4ff;
+  border-radius:17px;color:var(--oscuro);
+}
+.opcion-imagen img{
+  width:100%;height:135px;object-fit:contain;
+  display:block;background:#faf8ff;border-radius:10px;
+}
+.opcion-palabra{
+  min-height:85px;font-size:19px;background:white;color:var(--oscuro);
+  border:3px solid #e0d4ff;border-radius:17px;padding:12px;
+  overflow-wrap:anywhere;
+}
+.opcion-imagen.correcta,.opcion-palabra.correcta{
+  border-color:var(--verde);background:#dcf8e9;
+}
+.opcion-imagen.incorrecta,.opcion-palabra.incorrecta{
+  border-color:var(--rojo);background:#ffe5eb;
+}
+.estado{
+  margin-top:14px;padding:13px;border-radius:12px;
+  background:#f1ebff;min-height:44px;line-height:1.5;font-weight:600;
+}
+.estado.correcto{background:#dcf8e9;color:#087548}
+.estado.error{background:#ffe5eb;color:#a82440}
+.imagen-juego{
+  width:min(100%,350px);height:260px;object-fit:contain;
+  display:block;margin:15px auto;background:#f8f5ff;border-radius:15px;
+}
+.numero-grande{font-size:23px;font-weight:800;color:var(--morado)}
+.progreso-fondo{height:11px;background:#e6def7;border-radius:20px;overflow:hidden;margin:12px 0}
+.progreso{height:100%;width:0;background:linear-gradient(90deg,var(--rosa),var(--azul));transition:width .2s}
+.estadisticas{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:15px}
+.estadistica{padding:12px;background:#f2edff;border-radius:12px;min-width:115px}
+.estadistica strong{display:block;font-size:23px;color:var(--morado)}
+.practica-dividida{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  margin:20px 0;align-items:stretch;
+}
+.mitad-practica{
+  min-width:0;padding:15px;background:white;
+  border:2px solid #e5dcff;border-radius:18px;
+}
+.mitad-practica h3{text-align:center;margin-top:0}
+.referencia-sena{
+  width:100%;height:330px;object-fit:contain;
+  background:#f8f5ff;border-radius:12px;
+}
+.camara-contenedor{
+  position:relative;width:100%;aspect-ratio:4/3;
+  overflow:hidden;background:#18142a;border-radius:15px;
+}
+#videoCamara,#lienzoCamara{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;transform:scaleX(-1);
+}
+#lienzoCamara{pointer-events:none}
+.pie{text-align:center;padding:20px;color:#786c91}
+@media(max-width:650px){
+  .panel{padding:15px}
+  .practica-dividida{grid-template-columns:1fr}
+  .referencia-sena{height:260px}
+  .opciones{gap:8px}
+  .opcion-imagen img{height:120px}
+  .menu button{flex:1 1 40%}
+}
+/* Fondo para todo el juego */
+body {
+    background-image: url("imagenes/fondomenu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Paneles de los cinco juegos */
+.game,
+.juego,
+.contenedor-juego {
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- IMÁGENES: TODAS ESTÁN DECLARADAS EN HTML -->
+<div id="imagenes-saludos" hidden>
+  <img id="img-bien" src="imagenes/saludos/bien.png" alt="Bien">
+  <img id="img-buenas-tardes" src="imagenes/saludos/BUENAS TARDES.png" alt="Buenas tardes">
+  <img id="img-buenas-noches" src="imagenes/saludos/BUENAS NOCHES.png" alt="Buenas noches">
+  <img id="img-buenos-dias" src="imagenes/saludos/BUENOS DIAS.png" alt="Buenos días">
+  <img id="img-chau" src="imagenes/saludos/chau.png" alt="Chau">
+  <img id="img-como-estas" src="imagenes/saludos/como estas.png" alt="Cómo estás">
+  <img id="img-de-nada" src="imagenes/saludos/de nada.png" alt="De nada">
+  <img id="img-gracias" src="imagenes/saludos/gracias.png" alt="Gracias">
+  <img id="img-hola" src="imagenes/saludos/hola.png" alt="Hola">
+  <img id="img-mas-o-menos" src="imagenes/saludos/mas o menos.png" alt="Más o menos">
+  <img id="img-perdon" src="imagenes/saludos/perdon.png" alt="Perdón">
+  <img id="img-por-favor" src="imagenes/saludos/por favor.png" alt="Por favor">
+  <img id="img-provecho" src="imagenes/saludos/provecho.png" alt="Provecho">
+</div>
+
+<header>
+  <h1>💜 ¡Aprendamos los saludos!</h1>
+  <p>Juegos interactivos para practicar lengua de señas</p>
+</header>
+
+<main class="contenedor">
+
+<nav class="menu">
+  <button class="activo" onclick="mostrarSeccion('galeria',this)">🖼️ Galería</button>
+  <button onclick="iniciarJuego('detective',this)">🔎 Detective</button>
+  <button onclick="mostrarSeccion('memoria',this);iniciarMemoria()">🧠 Memoria</button>
+  <button onclick="iniciarJuego('situaciones',this)">💬 Situaciones</button>
+  <button onclick="iniciarJuego('reto',this)">⚡ Reto rápido</button>
+  <button onclick="iniciarJuego('dialogo',this)">🗣️ Diálogo</button>
+  <button onclick="iniciarJuego('mision',this)">🏆 Misión</button>
+  <button onclick="mostrarSeccion('camara',this)">📷 Cámara</button>
+</nav>
+
+<!-- GALERÍA -->
+<section id="galeria" class="seccion visible">
+  <div class="panel">
+    <h2>🖼️ Galería visual</h2>
+    <p class="subtexto">Observa las imágenes de las expresiones que practicarás.</p>
+    <div id="galeriaContenido" class="grid"></div>
+  </div>
+</section>
+
+<!-- JUEGOS -->
+<section id="juego" class="seccion">
+  <div class="panel centro">
+    <h2 id="tituloJuego">Juego visual</h2>
+    <p id="instruccion" class="subtexto">Selecciona la respuesta correcta.</p>
+
+    <div class="estadisticas">
+      <div class="estadistica">⭐ Puntos<strong id="puntos">0</strong></div>
+      <div class="estadistica">✅ Correctas<strong id="aciertos">0</strong></div>
+      <div class="estadistica">❓ Pregunta<strong id="contador">0/0</strong></div>
+    </div>
+
+    <div class="progreso-fondo"><div id="barra" class="progreso"></div></div>
+    <h3 id="pregunta"></h3>
+    <img id="imagenPregunta" class="imagen-juego" alt="Seña de referencia" style="display:none">
+    <div id="opciones" class="opciones"></div>
+    <div id="estadoJuego" class="estado" aria-live="polite"></div>
+    <br>
+    <button id="siguiente" class="btn-principal" onclick="siguientePregunta()" style="display:none">Siguiente ➜</button>
+    <button id="reintentar" class="btn-rosa" onclick="ocultarReintento()" style="display:none">Intentar otra vez</button>
+    <button id="jugarOtraVez" class="btn-principal" onclick="reiniciarJuego()" style="display:none">🔄 Jugar otra vez</button>
+  </div>
+</section>
+
+<!-- MEMORIA -->
+<section id="memoria" class="seccion">
+  <div class="panel">
+    <h2>🧠 Memoria visual</h2>
+    <p class="subtexto">Encuentra las seis parejas de imágenes iguales.</p>
+    <div class="centro">
+      <div class="numero-grande">Parejas: <span id="parejas">0</span>/6</div>
+      <div class="numero-grande">Puntos: <span id="puntosMemoria">0</span></div>
+      <br><button class="btn-principal" onclick="iniciarMemoria()">🔄 Reiniciar</button>
+    </div>
+    <br>
+    <div id="tablero" class="grid"></div>
+    <div id="estadoMemoria" class="estado">Encuentra las seis parejas.</div>
+  </div>
+</section>
+
+<!-- CÁMARA -->
+<section id="camara" class="seccion">
+  <div class="panel">
+    <h2>📷 Practica con tu cámara</h2>
+    <p class="subtexto">Imita la seña de referencia y observa los puntos que detecta la cámara.</p>
+
+    <div class="practica-dividida">
+      <div class="mitad-practica">
+        <h3>🖼️ Seña de referencia</h3>
+        <img id="imagenPractica" class="referencia-sena" alt="Seña que debes practicar">
+        <p id="nombrePractica" class="numero-grande centro"></p>
+        <div class="centro">
+          <button class="btn-rosa" onclick="siguientePractica()">Cambiar seña ➜</button>
+        </div>
+      </div>
+
+      <div class="mitad-practica">
+        <h3>📷 Tu cámara</h3>
+        <div class="camara-contenedor">
+          <video id="videoCamara" autoplay playsinline muted></video>
+          <canvas id="lienzoCamara"></canvas>
+        </div>
+        <br>
+        <div class="centro">
+          <button class="btn-principal" onclick="iniciarCamara()">Activar cámara</button>
+          <button class="btn-rojo" onclick="detenerCamara()">Detener</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="estadoCamara" class="estado">Pulsa «Activar cámara» y permite el acceso.</div>
+    <p class="subtexto">Los puntos muestran el seguimiento de la mano; no confirman automáticamente que una seña sea correcta.</p>
+  </div>
+</section>
+
+</main>
+<footer class="pie">💜 Aprender, compartir e incluir.</footer>
+
+<script>
+const saludos=[
+ {nombre:"BIEN",idImagen:"img-bien"},
+ {nombre:"BUENAS TARDES",idImagen:"img-buenas-tardes"},
+ {nombre:"BUENAS NOCHES",idImagen:"img-buenas-noches"},
+ {nombre:"BUENOS DÍAS",idImagen:"img-buenos-dias"},
+ {nombre:"CHAU",idImagen:"img-chau"},
+ {nombre:"CÓMO ESTÁS",idImagen:"img-como-estas"},
+ {nombre:"DE NADA",idImagen:"img-de-nada"},
+ {nombre:"GRACIAS",idImagen:"img-gracias"},
+ {nombre:"HOLA",idImagen:"img-hola"},
+ {nombre:"MÁS O MENOS",idImagen:"img-mas-o-menos"},
+ {nombre:"PERDÓN",idImagen:"img-perdon"},
+ {nombre:"POR FAVOR",idImagen:"img-por-favor"},
+ {nombre:"PROVECHO",idImagen:"img-provecho"}
+];
+
+function rutaImagen(s){
+  const img=document.getElementById(s.idImagen);
+  return img ? img.getAttribute("src") : "";
+}
+function mezclar(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function opcionesAleatorias(correcta,cantidad=4){
+  return mezclar([
+    correcta,
+    ...mezclar(saludos.filter(s=>s.idImagen!==correcta.idImagen)).slice(0,cantidad-1)
+  ]);
+}
+function mostrarEstado(id,txt,tipo=""){
+  const el=document.getElementById(id);
+  el.textContent=txt;
+  el.className="estado "+tipo;
+}
+function mostrarSeccion(id,boton){
+  document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("visible"));
+  document.getElementById(id).classList.add("visible");
+  document.querySelectorAll(".menu button").forEach(b=>b.classList.remove("activo"));
+  if(boton)boton.classList.add("activo");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* GALERÍA */
+function cargarGaleria(){
+  const cont=document.getElementById("galeriaContenido");
+  cont.innerHTML="";
+  saludos.forEach(s=>{
+    const card=document.createElement("div");
+    card.className="tarjeta";
+    const img=document.createElement("img");
+    img.src=rutaImagen(s);
+    img.alt=s.nombre;
+    img.onerror=()=>{img.alt="No se encontró la imagen: "+s.nombre};
+    const titulo=document.createElement("h3");
+    titulo.textContent=s.nombre;
+    card.append(img,titulo);
+    cont.appendChild(card);
+  });
+}
+
+/* CONTENIDO DE LOS JUEGOS */
+const situaciones=[
+ {texto:"Llegas a la escuela por la mañana.",nombre:"BUENOS DÍAS"},
+ {texto:"Una compañera te ayuda.",nombre:"GRACIAS"},
+ {texto:"Quieres pedir algo amablemente.",nombre:"POR FAVOR"},
+ {texto:"Te vas y te despides.",nombre:"CHAU"},
+ {texto:"Llegas por la tarde.",nombre:"BUENAS TARDES"},
+ {texto:"Alguien te da las gracias.",nombre:"DE NADA"},
+ {texto:"Quieres disculparte.",nombre:"PERDÓN"},
+ {texto:"Te encuentras con una persona.",nombre:"HOLA"},
+ {texto:"No estás ni bien ni mal.",nombre:"MÁS O MENOS"},
+ {texto:"Preguntas cómo se encuentra alguien.",nombre:"CÓMO ESTÁS"},
+ {texto:"Deseas que alguien disfrute su comida.",nombre:"PROVECHO"},
+ {texto:"Te sientes bien.",nombre:"BIEN"},
+ {texto:"Saludas por la noche.",nombre:"BUENAS NOCHES"}
+];
+const dialogos=[
+ {texto:"Al comenzar el día saludas a tu profesora.",nombre:"BUENOS DÍAS"},
+ {texto:"Una persona te ayuda y quieres agradecerle.",nombre:"GRACIAS"},
+ {texto:"Necesitas pedir algo con educación.",nombre:"POR FAVOR"},
+ {texto:"Te despides de una amiga.",nombre:"CHAU"},
+ {texto:"Cometiste un error y quieres disculparte.",nombre:"PERDÓN"},
+ {texto:"Alguien te agradece.",nombre:"DE NADA"},
+ {texto:"Encuentras a alguien y lo saludas.",nombre:"HOLA"}
+];
+const misiones=[
+ {texto:"¿Qué expresión se usa para agradecer?",nombre:"GRACIAS"},
+ {texto:"¿Qué expresión se usa para pedir algo educadamente?",nombre:"POR FAVOR"},
+ {texto:"¿Qué expresión se usa para despedirse?",nombre:"CHAU"},
+ {texto:"¿Qué expresión corresponde a una disculpa?",nombre:"PERDÓN"},
+ {texto:"¿Qué saludo se usa por la mañana?",nombre:"BUENOS DÍAS"}
+];
+
+let modoActual="detective";
+let preguntas=[];
+let indice=0;
+let puntos=0;
+let aciertos=0;
+let respondida=false;
+let tiempo=30;
+let intervalo=null;
+let retoActivo=false;
+
+function iniciarJuego(modo,boton){
+  clearInterval(intervalo);
+  retoActivo=false;
+  modoActual=modo;
+  mostrarSeccion("juego",boton);
+
+  puntos=0;aciertos=0;indice=0;respondida=false;
+
+  if(modo==="situaciones"){
+    preguntas=mezclar(situaciones).map(x=>({
+      tipo:"situacion",texto:x.texto,
+      correcta:saludos.find(s=>s.nombre===x.nombre)
+    }));
+  }else if(modo==="dialogo"){
+    preguntas=mezclar(dialogos).map(x=>({
+      tipo:"situacion",texto:x.texto,
+      correcta:saludos.find(s=>s.nombre===x.nombre)
+    }));
+  }else if(modo==="mision"){
+    preguntas=mezclar(misiones).map(x=>({
+      tipo:"situacion",texto:x.texto,
+      correcta:saludos.find(s=>s.nombre===x.nombre)
+    }));
+  }else{
+    preguntas=mezclar(saludos).map(s=>({tipo:"imagen",correcta:s}));
+  }
+
+  const titulos={
+    detective:"🔎 Detective visual",
+    situaciones:"💬 ¿Qué expresión usarías?",
+    reto:"⚡ Reto rápido",
+    dialogo:"🗣️ Diálogo visual",
+    mision:"🏆 Mi misión"
+  };
+  document.getElementById("tituloJuego").textContent=titulos[modo];
+  document.getElementById("instruccion").textContent=
+    modo==="detective" ? "Mira la seña y elige su nombre." :
+    modo==="reto" ? "¡Tienes 30 segundos! Mira la seña y elige la palabra." :
+    "Lee la situación y selecciona la imagen correcta.";
+
+  dibujarPregunta();
+
+  if(modo==="reto")iniciarTemporizador();
+}
+
+function iniciarTemporizador(){
+  tiempo=30;retoActivo=true;
+  document.getElementById("instruccion").textContent="¡Tienes 30 segundos! Mira la seña y elige la palabra. Tiempo: "+tiempo+" s";
+  intervalo=setInterval(()=>{
+    tiempo--;
+    document.getElementById("instruccion").textContent="¡Rápido! Tiempo restante: "+tiempo+" segundos.";
+    if(tiempo<=0){
+      clearInterval(intervalo);retoActivo=false;
+      finalizarJuego(true);
+    }
+  },1000);
+}
+
+/* OPCIONES DE PALABRAS: DETECTIVE Y RETO RÁPIDO */
+function crearOpcionesTexto(contenedor,opciones){
+  contenedor.innerHTML="";
+  opciones.forEach(opcion=>{
+    const boton=document.createElement("button");
+    boton.className="opcion-palabra";
+    boton.textContent=opcion.nombre;
+    boton.onclick=()=>comprobar(opcion,boton);
+    contenedor.appendChild(boton);
+  });
+}
+
+/* OPCIONES DE IMÁGENES: LOS DEMÁS JUEGOS */
+function crearOpcionesImagenes(contenedor,opciones){
+  contenedor.innerHTML="";
+  opciones.forEach(opcion=>{
+    const boton=document.createElement("button");
+    boton.className="opcion-imagen";
+    const img=document.createElement("img");
+    img.src=rutaImagen(opcion);
+    img.alt="Opción visual";
+    boton.appendChild(img);
+    boton.onclick=()=>comprobar(opcion,boton);
+    contenedor.appendChild(boton);
+  });
+}
+
+function dibujarPregunta(){
+  if(indice>=preguntas.length){
+    finalizarJuego(false);
+    return;
+  }
+
+  respondida=false;
+  const p=preguntas[indice];
+  const ref=document.getElementById("imagenPregunta");
+  const contenedor=document.getElementById("opciones");
+
+  document.getElementById("pregunta").textContent=
+    p.texto || "¿Qué palabra corresponde a esta seña?";
+
+  if(p.tipo==="imagen"){
+    ref.src=rutaImagen(p.correcta);
+    ref.alt="Seña que debes identificar";
+    ref.style.display="block";
+  }else{
+    ref.style.display="none";
+    ref.removeAttribute("src");
+  }
+
+  document.getElementById("siguiente").style.display="none";
+  document.getElementById("reintentar").style.display="none";
+  document.getElementById("jugarOtraVez").style.display="none";
+
+  mostrarEstado("estadoJuego","Selecciona la respuesta correcta.");
+
+  const opciones=opcionesAleatorias(p.correcta,4);
+
+  if(modoActual==="detective"||modoActual==="reto"){
+    crearOpcionesTexto(contenedor,opciones);
+  }else{
+    crearOpcionesImagenes(contenedor,opciones);
+  }
+
+  actualizarMarcador();
+}
+
+function comprobar(opcion,boton){
+  if(respondida)return;
+
+  const correcta=preguntas[indice].correcta;
+
+  if(opcion.idImagen===correcta.idImagen){
+    respondida=true;
+    puntos+=10;
+    aciertos++;
+    boton.classList.add("correcta");
+
+    document.querySelectorAll("#opciones button").forEach(b=>b.disabled=true);
+
+    mostrarEstado("estadoJuego","¡Correcto! 🎉 Ganaste 10 puntos.","correcto");
+    document.getElementById("siguiente").style.display="inline-block";
+    document.getElementById("reintentar").style.display="none";
+  }else{
+    boton.classList.add("incorrecta");
+    boton.disabled=true;
+    mostrarEstado("estadoJuego","Esa respuesta no es correcta. Intenta otra opción.","error");
+  }
+
+  actualizarMarcador();
+}
+
+function actualizarMarcador(){
+  document.getElementById("puntos").textContent=puntos;
+  document.getElementById("aciertos").textContent=aciertos;
+  document.getElementById("contador").textContent=
+    Math.min(indice+1,preguntas.length)+"/"+preguntas.length;
+  document.getElementById("barra").style.width=
+    (indice/preguntas.length*100)+"%";
+}
+
+function siguientePregunta(){
+  if(!respondida)return;
+  indice++;
+
+  if(modoActual==="reto"&&retoActivo&&indice>=preguntas.length){
+    preguntas=mezclar(saludos).map(s=>({tipo:"imagen",correcta:s}));
+    indice=0;
+  }
+  dibujarPregunta();
+}
+
+function ocultarReintento(){
+  document.getElementById("reintentar").style.display="none";
+}
+
+function finalizarJuego(porTiempo=false){
+  clearInterval(intervalo);
+  retoActivo=false;
+  document.getElementById("pregunta").textContent=
+    porTiempo?"⏰ ¡Se acabó el tiempo!":"🏆 ¡Juego terminado!";
+  document.getElementById("imagenPregunta").style.display="none";
+  document.getElementById("opciones").innerHTML="";
+  document.getElementById("siguiente").style.display="none";
+  document.getElementById("reintentar").style.display="none";
+  document.getElementById("jugarOtraVez").style.display="inline-block";
+  document.getElementById("barra").style.width="100%";
+
+  mostrarEstado(
+    "estadoJuego",
+    "Resultado: "+puntos+" puntos y "+aciertos+" respuestas correctas.",
+    "correcto"
+  );
+}
+
+function reiniciarJuego(){iniciarJuego(modoActual)}
+
+/* MEMORIA VISUAL */
+let cartas=[],primera=null,bloqueo=false,parejas=0,puntosMem=0;
+
+function iniciarMemoria(){
+  cartas=mezclar(mezclar(saludos).slice(0,6).flatMap(s=>[
+    {s,id:s.idImagen},{s,id:s.idImagen}
+  ]));
+  primera=null;bloqueo=false;parejas=0;puntosMem=0;
+
+  document.getElementById("parejas").textContent="0";
+  document.getElementById("puntosMemoria").textContent="0";
+
+  const tablero=document.getElementById("tablero");
+  tablero.innerHTML="";
+
+  cartas.forEach((c,i)=>{
+    const b=document.createElement("button");
+    b.className="tarjeta";
+    b.innerHTML="<div style='font-size:45px'>❔</div><strong>Tarjeta "+(i+1)+"</strong>";
+    b.dataset.volteada="no";
+    b.dataset.encontrada="no";
+    b.onclick=()=>voltear(i,b);
+    tablero.appendChild(b);
+  });
+
+  mostrarEstado("estadoMemoria","Encuentra las seis parejas.");
+}
+
+function voltear(i,b){
+  if(bloqueo||b.dataset.volteada==="si"||b.dataset.encontrada==="si")return;
+
+  const c=cartas[i];
+  b.dataset.volteada="si";
+  b.innerHTML='<img src="'+rutaImagen(c.s)+'" alt="Tarjeta visual"><strong>Imagen</strong>';
+
+  if(!primera){
+    primera={i,b,c};
+    return;
+  }
+
+  if(primera.c.id===c.id){
+    b.dataset.encontrada="si";
+    primera.b.dataset.encontrada="si";
+    parejas++;puntosMem+=10;
+    document.getElementById("parejas").textContent=parejas;
+    document.getElementById("puntosMemoria").textContent=puntosMem;
+    primera=null;
+
+    if(parejas===6){
+      mostrarEstado("estadoMemoria","¡Ganaste! Encontraste todas las parejas. 🏆","correcto");
+    }else{
+      mostrarEstado("estadoMemoria","¡Pareja encontrada! +10 puntos.","correcto");
+    }
+  }else{
+    bloqueo=true;
+    const anterior=primera;
+    primera=null;
+    mostrarEstado("estadoMemoria","No coinciden. Sigue buscando.","error");
+
+    setTimeout(()=>{
+      [anterior,{i,b}].forEach(x=>{
+        x.b.dataset.volteada="no";
+        x.b.innerHTML="<div style='font-size:45px'>❔</div><strong>Tarjeta "+(x.i+1)+"</strong>";
+      });
+      bloqueo=false;
+    },900);
+  }
+}
+
+/* CÁMARA Y PUNTOS DE LA MANO */
+let flujo=null,manos=null,activa=false,procesando=false,indicePractica=0;
+const video=document.getElementById("videoCamara");
+const canvas=document.getElementById("lienzoCamara");
+const ctx=canvas.getContext("2d");
+
+function actualizarPractica(){
+  const s=saludos[indicePractica%saludos.length];
+  document.getElementById("nombrePractica").textContent=s.nombre;
+  const img=document.getElementById("imagenPractica");
+  img.src=rutaImagen(s);
+  img.alt="Referencia de la seña "+s.nombre;
+}
+function siguientePractica(){
+  indicePractica=(indicePractica+1)%saludos.length;
+  actualizarPractica();
+}
+
+async function iniciarCamara(){
+  if(activa)return;
+
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    mostrarEstado("estadoCamara","Abre la página mediante HTTPS o Live Server para utilizar la cámara.","error");
+    return;
+  }
+
+  try{
+    mostrarEstado("estadoCamara","Solicitando permiso para la cámara...");
+    flujo=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:"user"},audio:false
+    });
+    video.srcObject=flujo;
+    await video.play();
+    activa=true;
+
+    if(typeof Hands==="undefined"){
+      mostrarEstado("estadoCamara","La cámara está activa, pero no se cargó el sistema de seguimiento de manos. Revisa tu conexión.","error");
+      return;
+    }
+
+    manos=new Hands({
+      locateFile:f=>"https://cdn.jsdelivr.net/npm/@mediapipe/hands/"+f
+    });
+
+    manos.setOptions({
+      maxNumHands:2,
+      modelComplexity:1,
+      minDetectionConfidence:.55,
+      minTrackingConfidence:.5
+    });
+
+    manos.onResults(dibujarMano);
+    mostrarEstado("estadoCamara","Cámara activa. Coloca la mano frente a ella.","correcto");
+    procesarCamara();
+
+  }catch(error){
+    mostrarEstado("estadoCamara","No se pudo abrir la cámara. Revisa los permisos del navegador.","error");
+    detenerCamara();
+  }
+}
+
+async function procesarCamara(){
+  if(!activa||!manos)return;
+
+  if(video.readyState>=2&&!procesando){
+    procesando=true;
+    try{await manos.send({image:video})}
+    catch(error){console.error(error)}
+    procesando=false;
+  }
+
+  if(activa)requestAnimationFrame(procesarCamara);
+}
+
+function dibujarMano(resultado){
+  canvas.width=video.videoWidth||640;
+  canvas.height=video.videoHeight||480;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const manosDetectadas=resultado.multiHandLandmarks||[];
+
+  if(!manosDetectadas.length){
+    mostrarEstado("estadoCamara","No se detecta una mano. Colócala frente a la cámara.");
+    return;
+  }
+
+  manosDetectadas.forEach(puntos=>{
+    ctx.lineWidth=4;
+    ctx.strokeStyle="#ff72b6";
+
+    if(typeof HAND_CONNECTIONS!=="undefined"){
+      HAND_CONNECTIONS.forEach(conexion=>{
+        const a=puntos[conexion[0]];
+        const b=puntos[conexion[1]];
+        ctx.beginPath();
+        ctx.moveTo((1-a.x)*canvas.width,a.y*canvas.height);
+        ctx.lineTo((1-b.x)*canvas.width,b.y*canvas.height);
+        ctx.stroke();
+      });
+    }
+
+    puntos.forEach((p,i)=>{
+      ctx.beginPath();
+      ctx.arc((1-p.x)*canvas.width,p.y*canvas.height,i===0?7:5,0,Math.PI*2);
+      ctx.fillStyle=i===0?"#ffe45e":"#39e6b5";
+      ctx.fill();
+      ctx.lineWidth=2;
+      ctx.strokeStyle="white";
+      ctx.stroke();
+    });
+  });
+
+  mostrarEstado("estadoCamara","¡Mano detectada! Practica la seña: "+saludos[indicePractica].nombre,"correcto");
+}
+
+function detenerCamara(){
+  activa=false;
+  procesando=false;
+
+  if(flujo){
+    flujo.getTracks().forEach(pista=>pista.stop());
+    flujo=null;
+  }
+
+  video.srcObject=null;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  if(manos){
+    try{manos.close()}catch(error){}
+    manos=null;
+  }
+
+  mostrarEstado("estadoCamara","Cámara detenida.");
+}
+
+/* INICIALIZACIÓN */
+cargarGaleria();
+iniciarMemoria();
+actualizarPractica();
+</script>
+
+</body>
+</html>

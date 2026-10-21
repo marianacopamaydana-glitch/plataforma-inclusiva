@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Inclusiva</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        <img src="imagenes/logo.jpeg" alt="Logo">
+        <span>Plataforma Inclusiva</span>
+    </div>
+
+    <nav>
+
+        <a href="#" onclick="mostrarSeccion('inicio')">🏠 Inicio</a>
+
+        <!-- CONOCE MÁS -->
+        <div class="menu">
+            <button class="menu-btn" onclick="abrirMenu(event)">
+                📚 Conoce más ▾
+            </button>
+
+            <div class="dropdown">
+
+                <a href="#" onclick="mostrarSeccion('definicion')">
+                    📖 ¿Qué es la discapacidad auditiva?
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('tipos')">
+                    🔊 Tipos y grados
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('causas')">
+                    🧬 Causas
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('barreras')">
+                    🚧 Barreras
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('importancia')">
+                    ⭐ Importancia
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- APRENDE LENGUA DE SEÑAS -->
+        <div class="menu">
+
+            <button class="menu-btn" onclick="abrirMenu(event)">
+                🤟 Aprende Lengua de Señas ▾
+            </button>
+
+            <div class="dropdown grande">
+
+                <!-- ABECEDARIO -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        🔤 Abecedario ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('abecedario-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('abecedario-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('abecedario-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NÚMEROS -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        🔢 Números ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('numeros-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('numeros-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('numeros-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COLORES -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        🎨 Colores ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('colores-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('colores-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('colores-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SALUDOS -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        👋 Saludos ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('saludos-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('saludos-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('saludos-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FAMILIA -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        👨‍👩‍👧 Familia ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('familia-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('familia-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('familia-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMOCIONES -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        😊 Animales ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('emociones-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('emociones-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('emociones-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESCUELA -->
+                <div class="submenu-item">
+
+                    <button onclick="abrirSubmenu(event)">
+                        🏫 Escuela ▸
+                    </button>
+
+                    <div class="subdropdown">
+
+                        <a href="#" onclick="mostrarSeccion('escuela-imagenes')">
+                            🖼️ Imágenes
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('escuela-videos')">
+                            🎥 Videos
+                        </a>
+
+                        <a href="#" onclick="mostrarSeccion('escuela-juegos')">
+                            🎮 Juegos
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+        
+
+            </div>
+        </div>
+
+
+        <!-- INCLUSIÓN -->
+        <div class="menu">
+
+            <button class="menu-btn" onclick="abrirMenu(event)">
+                🌎 Inclusión ▾
+            </button>
+
+            <div class="dropdown">
+
+                <a href="#" onclick="mostrarSeccion('inclusion')">
+                    Inclusión en el aula
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('estrategias')">
+                    Estrategias
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('actividades')">
+                    Actividades
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <a href="#" onclick="mostrarSeccion('juegos')">🎮 Juegos</a>
+
+       
+
+        <a href="#" onclick="mostrarSeccion('contacto')">📩 Contacto</a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= INICIO ================= -->
+
+<section id="inicio" class="seccion inicio">
+
+    <div class="hero-text">
+
+        <span>♿ PLATAFORMA EDUCATIVA INCLUSIVA</span>
+
+        <h1>Conocer para Incluir</h1>
+
+        <p>
+            Explora información sobre la discapacidad auditiva,
+            aprende Lengua de Señas Boliviana y descubre recursos
+            educativos que promueven una educación inclusiva,
+            accesible y participativa.
+        </p>
+
+        <div class="botones">
+
+            <button onclick="mostrarSeccion('abecedario-imagenes')">
+                🤟 Aprender Lengua de Señas
+            </button>
+
+            <button onclick="mostrarSeccion('definicion')">
+                📚 Explorar información
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-imagen">
+
+        <img src="imagenes/R.png" alt="Educación inclusiva">
+
+    </div>
+
+</section>
+
+
+<!-- ================= DEFINICIÓN ================= -->
+
+<section id="definicion" class="seccion contenido">
+
+    <h2>📖 Discapacidad Auditiva</h2>
+
+    <div class="tarjeta-info">
+
+        <img src="imagenes/discapacidad.jpg">
+
+        <div>
+
+            <p>
+                La discapacidad auditiva se refiere a la dificultad
+                o imposibilidad de utilizar el sentido de la audición
+                de manera adecuada. Puede presentarse en diferentes
+                grados y puede estar presente desde el nacimiento
+                o aparecer a lo largo de la vida.
+            </p>
+
+            <p>
+                Las personas con discapacidad auditiva pueden utilizar
+                diferentes formas de comunicación, entre ellas la
+                Lengua de Señas Boliviana, lectura labial, escritura
+                y otros recursos de apoyo.
+            </p>
+
+            <p>
+                En el ámbito educativo es importante eliminar las
+                barreras de comunicación y garantizar la participación
+                de todos los estudiantes.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-imagenes">
+
+        <img src="imagenes/ley.png" alt="Ley">
+
+        <img src="imagenes/inclusión.png" alt="Inclusión">
+
+    </div>
+
+</section>
+
+
+<!-- ================= TIPOS ================= -->
+
+<section id="tipos" class="seccion contenido">
+
+    <h2>🔊 Tipos y grados de discapacidad auditiva</h2>
+
+    <div class="tarjetas">
+
+        <div class="card">
+
+            <img src="imagenes/nivel 1.jpg">
+
+            <h3>Leve</h3>
+
+            <p>
+                Puede existir dificultad para escuchar sonidos
+                suaves o seguir algunas conversaciones.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <img src="imagenes/nivel2.jpg">
+
+            <h3>Moderada</h3>
+
+            <p>
+                Puede dificultar la comprensión de conversaciones
+                especialmente cuando existe ruido ambiental.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <img src="imagenes/nivel 3.jpg">
+
+            <h3>Severa</h3>
+
+            <p>
+                La persona puede presentar una dificultad importante
+                para percibir los sonidos y la comunicación oral.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <img src="imagenes/sorda.jpg">
+
+            <h3>Profunda</h3>
+
+            <p>
+                Existe una pérdida auditiva muy significativa,
+                por lo que pueden utilizarse formas visuales
+                de comunicación.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CAUSAS ================= -->
+
+<section id="causas" class="seccion contenido">
+
+    <h2>🧬 Causas de la discapacidad auditiva</h2>
+
+    <div class="tarjetas">
+
+        <div class="card">
+
+            <img src="imagenes/genetica.jpg">
+
+            <h3>Factores genéticos</h3>
+
+            <p>
+                Algunas pérdidas auditivas pueden estar relacionadas
+                con factores hereditarios o genéticos.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <img src="imagenes/infecciones.jpg">
+
+            <h3>Infecciones</h3>
+
+            <p>
+                Determinadas infecciones pueden afectar el sistema
+                auditivo y producir pérdida de audición.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <img src="imagenes/traumatismo.jpg">
+
+            <h3>Traumatismos</h3>
+
+            <p>
+                Algunos traumatismos pueden provocar daños en las
+                estructuras relacionadas con la audición.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <img src="imagenes/ruido.jpg">
+
+            <h3>Ruidos fuertes</h3>
+
+            <p>
+                La exposición prolongada a sonidos muy fuertes
+                puede afectar la capacidad auditiva.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BARRERAS ================= -->
+
+<section id="barreras" class="seccion contenido">
+
+    <h2>🚧 Barreras para las personas con discapacidad auditiva</h2>
+
+    <div class="tarjeta-info">
+
+        <img src="imagenes/barrera.jpg">
+
+        <div>
+
+            <h3>🗣️ Barreras de comunicación</h3>
+
+            <p>
+                La falta de conocimiento de la Lengua de Señas
+                puede dificultar la comunicación.
+            </p>
+
+
+            <h3>📚 Barreras educativas</h3>
+
+            <p>
+                La falta de materiales accesibles puede dificultar
+                el aprendizaje y la participación.
+            </p>
+
+
+            <h3>🤝 Barreras sociales</h3>
+
+            <p>
+                La falta de información y sensibilización puede
+                generar dificultades para la inclusión.
+            </p>
+
+
+            <h3>💻 Barreras tecnológicas</h3>
+
+            <p>
+                La ausencia de recursos accesibles puede limitar
+                el acceso a la información.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= IMPORTANCIA ================= -->
+
+<section id="importancia" class="seccion contenido">
+
+    <h2>⭐ Importancia de la inclusión</h2>
+
+    <div class="importancia">
+
+        <img src="imagenes/inclusión.png">
+
+        <div>
+
+            <p>
+                La inclusión educativa permite que todos los
+                estudiantes tengan oportunidades de participar
+                en el proceso educativo.
+            </p>
+
+            <p>
+                En el caso de los estudiantes con discapacidad
+                auditiva, es importante contar con estrategias
+                de comunicación accesibles y recursos visuales.
+            </p>
+
+            <p>
+                Aprender Lengua de Señas también contribuye a
+                mejorar la comunicación, la convivencia y el
+                respeto dentro de la comunidad educativa.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= ABECEDARIO ==================== -->
+<!-- ================================================= -->
+
+<section id="abecedario-imagenes" class="seccion contenido">
+
+    <h2>🔤 Abecedario en Lengua de Señas</h2>
+
+    <p class="descripcion">
+        Conoce las letras del abecedario y practica su reconocimiento.
+    </p>
+
+    <div class="letras">
+
+    <div class="letra-card">
+    <img src="imagenes/abecedario/A.png" alt="Seña de la letra A">
+    <h3>A</h3>
+</div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/B.png" alt="Letra B en Lengua de Señas">
+        <h3>B</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/C.png" alt="Letra C en Lengua de Señas">
+        <h3>C</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/D.png" alt="Letra D en Lengua de Señas">
+        <h3>D</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/E.png" alt="Letra E en Lengua de Señas">
+        <h3>E</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/F.png" alt="Letra F en Lengua de Señas">
+        <h3>F</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/G.png" alt="Letra G en Lengua de Señas">
+        <h3>G</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/H.png" alt="Letra H en Lengua de Señas">
+        <h3>H</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/I.png" alt="Letra I en Lengua de Señas">
+        <h3>I</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/J.png" alt="Letra J en Lengua de Señas">
+        <h3>J</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/K.png" alt="Letra K en Lengua de Señas">
+        <h3>K</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/L.png" alt="Letra L en Lengua de Señas">
+        <h3>L</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/M.png" alt="Letra M en Lengua de Señas">
+        <h3>M</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/N.png" alt="Letra N en Lengua de Señas">
+        <h3>N</h3>
+    </div>
+
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/O.png" alt="Letra O en Lengua de Señas">
+        <h3>O</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/P.png" alt="Letra P en Lengua de Señas">
+        <h3>P</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/Q.png" alt="Letra Q en Lengua de Señas">
+        <h3>Q</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/R.png" alt="Letra R en Lengua de Señas">
+        <h3>R</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/S.png" alt="Letra S en Lengua de Señas">
+        <h3>S</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/T.png" alt="Letra T en Lengua de Señas">
+        <h3>T</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/U.png" alt="Letra U en Lengua de Señas">
+        <h3>U</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/V.png" alt="Letra V en Lengua de Señas">
+        <h3>V</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/W.png" alt="Letra W en Lengua de Señas">
+        <h3>W</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/X.png" alt="Letra X en Lengua de Señas">
+        <h3>X</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/Y.png" alt="Letra Y en Lengua de Señas">
+        <h3>Y</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/abecedario/Z.png" alt="Letra Z en Lengua de Señas">
+        <h3>Z</h3>
+    </div>
+
+</div>
+    </div>
+
+</section>
+
+
+<section id="abecedario-videos" class="seccion contenido">
+
+    <h2>🎥 Video del Abecedario</h2>
+
+    <div class="video-box">
+
+        <video controls>
+
+            <source src="video/luz.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+<video controls>
+
+            <source src="video/abecedario.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+
+    </div>
+
+</section>
+
+
+<section id="abecedario-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego del Abecedario</h2>
+
+    <div class="seccion-juego">
+
+        <p>Haz clic en el botón para abrir el juego:</p>
+
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://es.educaplay.com/recursos-educativos/29154053-colores_en_la_lsb_boliviana.html', '_blank')">
+            🔤 Jugar Abecedario
+        </button>
+<button type="button"
+        class="boton-abecedario"
+        onclick="window.location.href='juegos/abecedario.html'">
+    🔤 Más juegos
+</button>
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= NÚMEROS ======================= -->
+<!-- ================================================= -->
+
+<section id="numeros-imagenes" class="seccion contenido">
+
+    <h2>🔢 Números en Lengua de Señas</h2>
+
+    <div class="numeros">
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/1.png" alt="Numero 1 en Lengua de Señas">
+        <h3>UNO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/2.png" alt="Numero 2 en Lengua de Señas">
+        <h3>DOS</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/3.png" alt="Numero 3 en Lengua de Señas">
+        <h3>TRES</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/4.png" alt="Numero 4 en Lengua de Señas">
+        <h3>CUATRO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/5.png" alt="Numero 5 en Lengua de Señas">
+        <h3>CINCO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/6.png" alt="Numero 6 en Lengua de Señas">
+        <h3>SEIS</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/7.png" alt="Numero 7 en Lengua de Señas">
+        <h3>SIETE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/8.png" alt="Numero 8 en Lengua de Señas">
+        <h3>OCHO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/9.png" alt="Numero 9 en Lengua de Señas">
+        <h3>NUEVE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/10.png" alt="Numero 10 en Lengua de Señas">
+        <h3>DIEZ</h3>
+    </div>
+<div class="letra-card">
+        <img src="imagenes/NUMEROS/11.png" alt="Numero 11 en Lengua de Señas">
+        <h3>ONCE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/12.png" alt="Numero 12 en Lengua de Señas">
+        <h3>DOCE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/13.png" alt="Numero 13 en Lengua de Señas">
+        <h3>TRECE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/14.png" alt="Numero 14 en Lengua de Señas">
+        <h3>CATORCE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/15.png" alt="Numero 15 en Lengua de Señas">
+        <h3>QUINCE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/16.png" alt="Numero 16 en Lengua de Señas">
+        <h3>DIECISEIS</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/17.png" alt="Numero 17 en Lengua de Señas">
+        <h3>DIENCISIETE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/18.png" alt="Numero 18 en Lengua de Señas">
+        <h3>DIECIOCHO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/19.png" alt="Numero 19 en Lengua de Señas">
+        <h3>DIECINUEVE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/NUMEROS/20.png" alt="Numero 20 en Lengua de Señas">
+        <h3>VEINTE</h3>
+    </div>
+</div>
+</section>
+
+
+<section id="numeros-videos" class="seccion contenido">
+
+    <h2>🎥 Video de los Números</h2>
+
+    <div class="video-box">
+
+        <video controls>
+
+            <source src="video/josé.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+        <h2> videos del ministerio de educación </h2>
+<video controls>
+
+            <source src="video/numero 0 al 50.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+        <video controls>
+
+            <source src="video/51 a 500.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+    </div>
+
+</section>
+
+
+<section id="numeros-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego de Números</h2>
+
+    <div class="zona-juegos-numeros">
+
+        <h3>🧠 Practica Lengua de Señas</h3>
+
+        <p>Selecciona un juego:</p>
+
+        <div class="botones-juegos">
+
+            <button type="button" onclick="window.open('https://es.educaplay.com/recursos-educativos/29710361-numeros_en_lengua_de_senas_lse_memoria.html', '_blank')">
+                🚀 Memoria de Números
+            </button>
+
+            <button type="button" onclick="window.open('https://es.educaplay.com/recursos-educativos/29710395-senales_numericas_en_carretera_empareja_cantidad.html', '_blank')">
+                🎮 Relaciona Números
+            </button>
+<button type="button"
+        class="boton-abecedario"
+        onclick="window.location.href='juegos/numeros.html'">
+    🔤 Más juegos
+</button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- ================= COLORES ======================= -->
+<!-- ================================================= -->
+
+<section id="colores-imagenes" class="seccion contenido">
+
+    <h2>🎨 Colores en Lengua de Señas</h2>
+
+    <div class="colores">
+
+
+        <div class="letra-card">
+        <img src="imagenes/colores/rojo.jpeg" alt="Color rojo en Lengua de Señas">
+        <h3>ROJO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/colores/azul.jpeg" alt="Color azul en Lengua de Señas">
+        <h3>AZUL</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/colores/verde.jpeg" alt="Color verde en Lengua de Señas">
+        <h3>VERDE</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/colores/amarillo.jpeg" alt="Color amarillo Lengua de Señas">
+        <h3>AMARILLO</h3>
+    </div>
+    <div class="letra-card">
+        <img src="imagenes/colores/naranja.jpeg" alt="Color naranja  en Lengua de Señas">
+        <h3>NARANJA</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/colores/morado.jpeg" alt="Color morado Lengua de Señas">
+        <h3>MORADO</h3>
+    </div>
+    </div>
+
+</section>
+
+
+<section id="colores-videos" class="seccion contenido">
+
+    <h2>🎥 Video de los Colores</h2>
+
+    <div class="video-box">
+
+        <video controls>
+
+            <source src="video/gema.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+ VIDEOS DEL MINISTERIO DE EDUCACIÓN
+ <video controls>
+
+            <source src="video/colores.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+    </div>
+
+</section>
+
+
+<section id="colores-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego de Colores</h2>
+
+    <div class="juego">
+
+        <h3>Practica los colores</h3>
+
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://wordwall.net/es/resource/120826315?wwmethod=link', '_blank')">
+            🔤 Escribir
+        </button>
+<button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://es.educaplay.com/recursos-educativos/30652356-colores_en_senas_memoria_visual.html', '_blank')">
+            🔤 Memoria
+        </button>
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://es.educaplay.com/recursos-educativos/30947442-colores_sopa_de_le_letras.html', '_blank')">
+            🔤 Sopa de letras
+        </button> <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('file:///C:/Users/HP/Desktop/final/juegos/colores.html', '_blank')">
+            🔤 Más juegos
+        </button>
+        <p id="resultadoColor"></p>
+<button type="button"
+        class="boton-abecedario"
+        onclick="window.location.href='juegos/colores.html'">
+    🔤 Más juegos
+</button>
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= SALUDOS ======================= -->
+<!-- ================================================= -->
+
+<section id="saludos-imagenes" class="seccion contenido">
+
+    <h2>👋 Saludos</h2>
+
+    <div class="vocabulario">
+    <div class="letra-card">
+        <img src="imagenes/saludos/hola.png" alt="Hola en Lengua de Señas">
+        <h3>HOLA</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/saludos/BUENOS DIAS.png" alt="Buenos días en Lengua de Señas">
+        <h3>BUENOS DÍAS</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/saludos/BUENAS TARDES.png" alt="Buenas tardes Lengua de Señas">
+        <h3>BUENAS TARDES</h3>
+    </div>
+    <div class="letra-card">
+        <img src="imagenes/saludos/BUENAS NOCHES.png" alt="Buenas noches en Lengua de Señas">
+        <h3>BUENAS NOCHES</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/saludos/como estyas.png" alt="Como estás Lengua de Señas">
+        <h3>COMO ESTÁS</h3>
+    </div>
+<div class="letra-card">
+        <img src="imagenes/saludos/gracias.png" alt="Gracias en Lengua de Señas">
+        <h3>GRACIAS</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/saludos/por favor.png" alt="Por favor en Lengua de Señas">
+        <h3>POR FAVOR</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/saludos/chau.png" alt="chau Lengua de Señas">
+        <h3>CHAU</h3>
+    </div>
+
+</section>
+
+
+<section id="saludos-videos" class="seccion contenido">
+
+    <h2>🎥 Videos de Saludos</h2>
+
+    <div class="sin-video">
+<video controls>
+
+            <source src="video/saludos.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+
+    </div>
+
+</section>
+
+
+<section id="saludos-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego de Saludos</h2>
+
+    <div class="juego">
+
+        <p>Haz clic en el botón para abrir el juego:</p>
+
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://es.educaplay.com/recursos-educativos/30983839-saludos.html', '_blank')">
+            🔤 Salta
+        </button>
+  <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://es.educaplay.com/recursos-educativos/30651621-lsb_bolivia_introduccion_y_temas_clave.html', '_blank')">
+            🔤 Fichas
+        </button>
+<button type="button"
+        class="boton-abecedario"
+        onclick="window.location.href='juegos/saludos.html'">
+    🔤 Más juegos
+</button>
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= FAMILIA ======================= -->
+<!-- ================================================= -->
+
+<section id="familia-imagenes" class="seccion contenido">
+
+    <h2>👨‍👩‍👧 Familia</h2>
+
+    <div class="vocabulario">
+<div class="letra-card">
+        <img src="imagenes/FAMILIA/mami.png" alt="Mamá en Lengua de Señas">
+        <h3>MAMÁ</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/´PAPA.png" alt="Papá en Lengua de Señas">
+        <h3>PAPÁ</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/ABUELA.png" alt="Abuela Lengua de Señas">
+        <h3>ABUELA</h3>
+    </div>
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/ABUELO.png" alt="Abuelo en Lengua de Señas">
+        <h3>ABUELO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/TIA.png" alt="Tía Lengua de Señas">
+        <h3>TÍA</h3>
+    </div>
+<div class="letra-card">
+        <img src="imagenes/FAMILIA/TIO.png" alt="Tío en Lengua de Señas">
+        <h3>TÍO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/HERMANA.png" alt="Hermana en Lengua de Señas">
+        <h3>HERMANA</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/HERMANO.png" alt="Hemano Lengua de Señas">
+        <h3>HERMANO</h3>
+    </div>
+<div class="letra-card">
+        <img src="imagenes/FAMILIA/SOBRINA.png" alt="Sobrina en Lengua de Señas">
+        <h3>SOBRINA</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/SOBRINO.png" alt="Sobrino en Lengua de Señas">
+        <h3>SOBRINO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/PRIMA.png" alt="Prima Lengua de Señas">
+        <h3>PRIMA</h3>
+    </div>
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/PRIMO.png" alt="primo en Lengua de Señas">
+        <h3>PRIMO</h3>
+    </div>
+
+    <div class="letra-card">
+        <img src="imagenes/FAMILIA/BEBE.png" alt="Bebé Lengua de Señas">
+        <h3>BEBÉ</h3>
+    </div>
+<div class="letra-card">
+        <img src="imagenes/FAMILIA/HIJA.png" alt="HIja en Lengua de Señas">
+        <h3>HIJA</h3>
+    </div>
+    </div>
+
+</section>
+
+
+<section id="familia-videos" class="seccion contenido">
+
+    <h2>🎥 Videos de Familia</h2>
+
+    <div class="sin-video">
+
+
+        <video controls>
+
+            <source src="video/familia.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+    </div>
+
+</section>
+
+
+<section id="familia-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego de Familia</h2>
+
+    <div class="juego">
+
+        <p>Haz clic en el botón para abrir el juego:</p>
+
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://wordwall.net/es/resource/119389096/familia', '_blank')">
+            🔤 Jugar con los materiales
+        </button>
+ <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('file:///C:/Users/HP/Desktop/final/juegos/familia.html', '_blank')">
+            🔤 Otros juegos
+        </button>
+        <button type="button"
+        class="boton-abecedario"
+        onclick="window.location.href='juegos/familia.html'">
+    🔤 Más juegos
+    </div>
+
+</button>
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= EMOCIONES ===================== -->
+<!-- ================================================= -->
+
+<section id="emociones-imagenes" class="seccion contenido">
+
+    <h2>😊 ANIMALES</h2>
+
+    <div class="vocabulario">
+
+        <div class="letra-card">
+            <img src="imagenes/animales/burro.png" alt="Burro Lengua de Señas">
+            <h3>BURRO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/caballo.png" alt="Caballo en Lengua de Señas">
+            <h3>CABALLO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/conejo.png" alt="Conejo en Lengua de Señas">
+            <h3>CONEJO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/gallina.png" alt="Gallina Lengua de Señas">
+            <h3>GALLINA</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/gallo.png" alt="Gallo en Lengua de Señas">
+            <h3>GALLO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/gato.png" alt="Gato Lengua de Señas">
+            <h3>GATO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/llama.png" alt="Llama en Lengua de Señas">
+            <h3>LLAMA</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/loro.png" alt="Loro Lengua de Señas">
+            <h3>LORO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/oveja.png" alt="Oveja en Lengua de Señas">
+            <h3>OVEJA</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/pajaro.png" alt="Pajaro Lengua de Señas">
+            <h3>PAJARO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/paloma.png" alt="Paloma en Lengua de Señas">
+            <h3>PALOMA</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/pato.png" alt="Pato en Lengua de Señas">
+            <h3>PATO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/perro.png" alt="Perro Lengua de Señas">
+            <h3>PERRO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/pez.png" alt="Pez en Lengua de Señas">
+            <h3>PEZ</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/toro.png" alt="Toro Lengua de Señas">
+            <h3>TORO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/animales/tortuga.png" alt="Tortuga en Lengua de Señas">
+            <h3>TORTUGA</h3>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="emociones-videos" class="seccion contenido">
+
+    <h2>🎥 Videos de Animales</h2>
+
+    <div class="sin-video">
+
+
+        <video controls>
+
+            <source src="video/animales.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+    </div>
+
+
+</section>
+
+
+<section id="emociones-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego de Animales</h2>
+
+    <div class="juego">
+
+        <p>Haz clic en el botón para abrir el juego:</p>
+
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://wordwall.net/es/resource/119388776?wwmethod=link&wwshareintent=student', '_blank')">
+            🔤 FICHAS
+        </button>
+        
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= ESCUELA ======================= -->
+<!-- ================================================= -->
+
+<section id="escuela-imagenes" class="seccion contenido">
+
+    <h2>🏫 Escuela</h2>
+
+    <div class="vocabulario">
+
+            <div class="letra-card">
+            <img src="imagenes/ESCUELA/BOLIGRAFO.png" alt="BOLIGRAFO en Lengua de Señas">
+            <h3>BOLIGRAFO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/CUADERNO.png" alt="CUADERNO en Lengua de Señas">
+            <h3>CUADERNOO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/GOMA.png" alt="GOMA Lengua de Señas">
+            <h3>GOMA</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/LAPIZ.png" alt="LAPIZ en Lengua de Señas">
+            <h3>LAPIZ</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/LIBRO.png" alt="LIBRO Lengua de Señas">
+            <h3>LIBRO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/PAPEL.png" alt="PAPEL en Lengua de Señas">
+            <h3>PAPEL</h3>
+        </div>
+ <div class="letra-card">
+            <img src="imagenes/ESCUELA/PEGAMENTO.png" alt="PEGAMENTO Lengua de Señas">
+            <h3>PEGAMENTO</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/TAJADOR.png" alt="TAJADOR en Lengua de Señas">
+            <h3>TAJADOR</h3>
+        </div>
+
+        <div class="letra-card">
+            <img src="imagenes/ESCUELA/TIJERAS.png" alt="Tijeras Lengua de Señas">
+            <h3>TIJERAS</h3>
+        </div>
+
+
+
+    </div>
+
+</section>
+
+
+<section id="escuela-videos" class="seccion contenido">
+
+    <h2>🎥 Videos de Escuela</h2>
+
+    <div class="sin-video">
+<video controls>
+
+            <source src="video/material.mp4" type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
+
+        </video>
+
+    </div>
+
+</section>
+
+
+<section id="escuela-juegos" class="seccion contenido">
+
+    <h2>🎮 Juego de Escuela</h2>
+
+    <div class="juego">
+
+        <p>Haz clic en el botón para abrir el juego:</p>
+
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open('https://wordwall.net/es/resource/120826845?wwmethod=link', '_blank')">
+            🔤 Jugar con los materiales
+        </button>
+        <button type="button"
+                class="boton-abecedario"
+                onclick="window.open(' https://wordwall.net/es/resource/120826845?wwmethod=link', '_blank')">
+            🔤 MAS JUEGOS
+        </button>
+       
+    </div>
+
+</section>
+
+
+<!-- ================= INCLUSIÓN ================= -->
+
+<section id="inclusion" class="seccion contenido">
+
+    <h2>🌎 Inclusión en el aula</h2>
+
+    <div class="importancia">
+
+        <img src="imagenes/inclusión.png">
+
+        <div>
+
+            <p>
+                La inclusión educativa busca garantizar que todos
+                los estudiantes puedan participar en las actividades
+                escolares y acceder al aprendizaje.
+            </p>
+
+            <p>
+                Para estudiantes con discapacidad auditiva es
+                importante contar con recursos visuales, materiales
+                accesibles y formas adecuadas de comunicación.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ESTRATEGIAS ================= -->
+
+<section id="estrategias" class="seccion contenido">
+
+    <h2>💡 Estrategias inclusivas</h2>
+
+    <div class="tarjetas">
+
+        <div class="card-simple">
+            👀
+            <h3>Apoyo visual</h3>
+            <p>
+                Utilizar imágenes, gráficos, palabras escritas
+                y otros recursos visuales.
+            </p>
+        </div>
+
+        <div class="card-simple">
+            🤟
+            <h3>Comunicación</h3>
+            <p>
+                Facilitar el aprendizaje de la Lengua de Señas.
+            </p>
+        </div>
+
+        <div class="card-simple">
+            🤝
+            <h3>Participación</h3>
+            <p>
+                Promover la participación de todos los estudiantes.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ACTIVIDADES ================= -->
+
+<section id="actividades" class="seccion contenido">
+
+    <h2>🎯 Actividades inclusivas</h2>
+
+    <div class="tarjetas">
+
+        <div class="card-simple">
+            📖
+            <h3>Aprende</h3>
+            <p>
+                Conoce nuevas palabras y expresiones.
+            </p>
+        </div>
+
+        <div class="card-simple">
+            🤟
+            <h3>Practica</h3>
+            <p>
+                Practica las señas aprendidas.
+            </p>
+        </div>
+
+        <div class="card-simple">
+            🏆
+            <h3>Evalúa</h3>
+            <p>
+                Comprueba tus conocimientos mediante juegos.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= JUEGOS ================= -->
+
+<section id="juegos" class="seccion contenido">
+
+    <h2>🎮 Zona de Juegos</h2>
+
+    <div class="juego-principal">
+
+        <h3>🧠 Practica Lengua de Señas</h3>
+
+        <p>Selecciona un tema:</p>
+
+        <div class="botones-juego">
+
+           <button type="button" onclick="window.open('https://es.educaplay.com/recursos-educativos/29154053-colores_en_la_lsb_boliviana.html', '_blank')">
+    🔤 Abecedario
+</button>
+
+            <button onclick="mostrarSeccion('numeros-juegos')">
+                🔢 Números
+            </button>
+
+            <button onclick="mostrarSeccion('colores-juegos')">
+                🎨 Colores
+            </button>
+
+            <button onclick="mostrarSeccion('saludos-juegos')">
+                👋 Saludos
+            </button>
+            <button type="button" onclick="window.open('file:///C:/Users/HP/Desktop/discapacidad%20auditiva/a/info/index.html', '_blank')">
+    🔤 JCLIC
+</button>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<!-- ================= CONTACTO ================= -->
+
+<section id="contacto" class="seccion contenido">
+
+    <h2>📩 Contacto</h2>
+
+    <form onsubmit="enviarFormulario(event)">
+
+        <input
+            type="text"
+            placeholder="Nombre"
+            required
+        >
+
+        <input
+            type="email"
+            placeholder="Correo electrónico"
+            required
+        >
+
+        <textarea
+            placeholder="Escribe tu mensaje..."
+            required
+        ></textarea>
+
+        <button type="submit">
+            Enviar mensaje
+        </button>
+
+    </form>
+
+    <p id="mensajeFormulario"></p>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+
+<footer class="pie-pagina">
+    <div class="footer-contenedor">
+
+        <div class="footer-columna">
+            <h3>Institución guía</h3>
+            <p>CENTRO DE REHABILITACIÓN FISICA Y</p>
+            <p>EDUCACIÓN ESPECIAL "CEREFE"</p>
+        </div>
+
+        <div class="footer-columna">
+            <h3>Ubicación</h3>
+                Villa Dolores, calle 6, n° 50, 591
+            </a>
+            <a href="https://www.facebook.com/CentrodeRehabilitacionFisicayEducacionEspecial" target="_blank">
+                Facebook
+            </a>
+            <a href="fcerefe@gmail.com" target="_blank">
+                Correo electrónico
+            </a>
+        </div>
+
+        <div class="footer-columna">
+            <h3>Contacto del centro</h3>
+            <p>Teléfono: 2 813638</p>
+        </div>
+
+    </div>
+
+    <div class="footer-inferior">
+        <p>Proyecto Inclusivo Bolivia © 2026</p>
+        <p>Educación · Inclusión · Comunicación</p>
+    </div>
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1612 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f5fb;
+    color: #25253a;
+}
+
+/* ================= HEADER ================= */
+
+header {
+    width: 100%;
+    background: linear-gradient(90deg, #4527a0, #1976d2);
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,.20);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: white;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+nav > a,
+.menu-btn {
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 12px 9px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+nav > a:hover,
+.menu-btn:hover {
+    background: rgba(255,255,255,.18);
+    border-radius: 8px;
+}
+
+
+/* ================= MENU ================= */
+
+.menu {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 270px;
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.20);
+    display: none;
+    overflow: visible;
+}
+
+.dropdown.mostrar {
+    display: block;
+}
+
+.dropdown a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+.dropdown a:hover {
+    background: #eeeaff;
+    color: #4527a0;
+}
+
+.grande {
+    width: 260px;
+}
+
+.submenu-item {
+    position: relative;
+}
+
+.submenu-item > button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 15px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.submenu-item > button:hover {
+    background: #eeeaff;
+    color: #4527a0;
+}
+
+.subdropdown {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 180px;
+    background: white;
+    box-shadow: 5px 8px 20px rgba(0,0,0,.20);
+    border-radius: 10px;
+    display: none;
+    overflow: hidden;
+}
+
+.subdropdown.mostrar {
+    display: block;
+}
+
+
+/* ================= SECCIONES ================= */
+
+.seccion {
+    display: none;
+    min-height: 75vh;
+}
+
+#inicio {
+    display: flex;
+}
+
+
+/* ============================== 
+   SECCIÓN INICIO 
+================================ */ 
+
+.inicio { 
+    min-height: 85vh; 
+    padding: 50px 7%; 
+
+    display: flex ; 
+    flex-direction: row ;
+    flex-wrap: nowrap;
+
+    align-items: center; 
+    justify-content: space-between; 
+    gap: 60px; 
+
+    background: linear-gradient( 
+        135deg, 
+        #f5f2ff 0%, 
+        #e9edff 50%, 
+        #f8f6ff 100% 
+    ); 
+
+    overflow: hidden; 
+    box-sizing: border-box;
+} 
+
+
+/* ============================== 
+   TEXTO 
+================================ */ 
+
+.hero-text { 
+    width: 52% !important; 
+    max-width: 650px; 
+    flex-shrink: 0;
+    z-index: 2; 
+} 
+
+
+.hero-text > span { 
+    display: inline-block; 
+    margin-bottom: 20px; 
+    padding: 10px 18px; 
+
+    color: #4a299c; 
+    background: #ffffff; 
+    border-radius: 30px; 
+
+    font-size: 15px; 
+    font-weight: bold; 
+
+    box-shadow: 0 5px 18px rgba(65, 40, 140, 0.12); 
+} 
+
+
+.hero-text h1 { 
+    margin: 0 0 20px; 
+    font-size: 60px; 
+    line-height: 1.1; 
+    color: #321477; 
+    font-weight: 800; 
+} 
+
+
+.hero-text p { 
+    margin-bottom: 30px; 
+    font-size: 18px; 
+    line-height: 1.7; 
+    color: #4c4960; 
+} 
+
+
+/* ============================== 
+   BOTONES 
+================================ */ 
+
+.botones { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+} 
+
+
+.botones button { 
+    border: none; 
+    padding: 15px 24px; 
+    border-radius: 30px; 
+
+    background: linear-gradient( 
+        135deg, 
+        #4925a5, 
+        #7041d1 
+    ); 
+
+    color: white; 
+    font-size: 15px; 
+    font-weight: bold; 
+    cursor: pointer; 
+
+    box-shadow: 0 8px 20px rgba(73, 37, 165, 0.25); 
+    transition: all 0.3s ease; 
+} 
+
+
+.botones button:hover { 
+    transform: translateY(-4px); 
+    box-shadow: 0 12px 25px rgba(73, 37, 165, 0.35); 
+} 
+
+
+/* ============================== 
+   IMAGEN 
+================================ */ 
+
+.hero-imagen { 
+    width: 45% !important; 
+    flex-shrink: 0;
+
+    display: flex !important; 
+    justify-content: center; 
+    align-items: center; 
+
+    position: relative; 
+} 
+
+
+/* Círculo decorativo detrás */ 
+
+.hero-imagen::before { 
+    content: ""; 
+
+    position: absolute; 
+    width: 390px; 
+    height: 390px; 
+
+    background: #d9d0ff; 
+    border-radius: 50%; 
+
+    right: 10px; 
+    top: 50%; 
+
+    transform: translateY(-50%); 
+
+    opacity: 0.7; 
+    z-index: 0; 
+} 
+
+
+/* Imagen */ 
+
+.hero-imagen img { 
+    position: relative; 
+    z-index: 1; 
+
+    width: 100%; 
+    max-width: 520px; 
+    height: 390px; 
+
+    object-fit: cover; 
+    border-radius: 30px; 
+    border: 6px solid white; 
+
+    box-shadow: 
+        0 20px 45px rgba(48, 27, 110, 0.25); 
+
+    transition: transform 0.4s ease; 
+} 
+
+
+.hero-imagen img:hover { 
+    transform: scale(1.03); 
+} 
+
+
+/* ================= CONTENIDO ================= */ 
+
+.contenido { 
+    padding: 60px 8%; 
+} 
+ 
+.contenido h2 { 
+    text-align: center; 
+    font-size: 34px; 
+    color: #4527a0; 
+    margin-bottom: 30px; 
+} 
+ 
+.descripcion { 
+    text-align: center; 
+    font-size: 18px; 
+    margin-bottom: 30px; 
+}
+
+/* ================= CONTENIDO ================= */
+
+.contenido {
+    padding: 60px 8%;
+}
+
+.contenido h2 {
+    text-align: center;
+    font-size: 34px;
+    color: #4527a0;
+    margin-bottom: 30px;
+}
+
+.descripcion {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+
+/* ================= TARJETAS ================= */
+
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 18px rgba(0,0,0,.12);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+}
+
+.card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.card h3,
+.card p {
+    padding: 10px 18px;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+
+/* ================= INFORMACIÓN ================= */
+
+.tarjeta-info {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.10);
+}
+
+.tarjeta-info img {
+    width: 40%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.tarjeta-info p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.info-imagenes {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.info-imagenes img {
+    width: 230px;
+    height: 170px;
+    object-fit: contain;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.10);
+}
+
+
+/* ================= IMPORTANCIA ================= */
+
+.importancia {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.10);
+}
+
+.importancia img {
+    width: 45%;
+    max-height: 350px;
+    object-fit: contain;
+}
+
+.importancia p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+
+/* ================= ABECEDARIO ================= */
+.abecedario-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 10px;
+}
+
+.letra-card {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transition: 0.3s ease;
+    border: 2px solid #eeeeee;
+}
+
+.letra-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+}
+
+.letra-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+.letra-card h3 {
+    margin: 12px 0 5px;
+    font-size: 30px;
+    color: #4527a0;
+}
+
+/* Celulares */
+@media (max-width: 700px) {
+    .abecedario-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .letra-card img {
+        height: 140px;
+    }
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 400px) {
+    .abecedario-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.letras {
+    max-width: 900px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 15px;
+}
+
+.letras div {
+    height: 90px;
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+    color: #4527a0;
+    box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    transition: .3s;
+}
+
+.letras div:hover {
+    transform: scale(1.08);
+}
+
+
+/* ================= NÚMEROS ================= */
+
+.numeros {
+    max-width: 800px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.numeros div {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,.10);
+}
+
+.numeros strong {
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+
+/* ================= COLORES ================= */
+
+.colores {
+    max-width: 800px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.color {
+    padding: 50px 20px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.rojo {
+    background: #ffb3b3;
+}
+
+.azul {
+    background: #b3d9ff;
+}
+
+.verde {
+    background: #b9efc1;
+}
+
+.amarillo {
+    background: #fff0a8;
+}
+
+.naranja {
+    background: #ffd0a3;
+}
+
+.morado {
+    background: #d8b8ff;
+}
+
+
+/* ================= VOCABULARIO ================= */
+
+.vocabulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 20px;
+}
+
+.vocabulario div {
+    background: white;
+    padding: 35px 15px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 45px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.10);
+}
+
+.vocabulario strong {
+    display: block;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+
+/* ================= FRASES ================= */
+
+.frases {
+    max-width: 900px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.frases div {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 19px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,.10);
+}
+
+
+/* ================= VIDEOS ================= */
+
+.video-box {
+    max-width: 850px;
+    margin: auto;
+    background: #111;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.video-box video {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+}
+
+.sin-video {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 50px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.10);
+}
+
+.sin-video span {
+    font-size: 60px;
+}
+
+
+/* ================= JUEGOS ================= */
+
+.juego,
+.juego-principal {
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 7px 25px rgba(0,0,0,.15);
+}
+
+.juego h3,
+.juego-principal h3 {
+    color: #4527a0;
+    margin-bottom: 20px;
+}
+
+#letraJuego,
+#numeroJuego {
+    font-size: 80px;
+    font-weight: bold;
+    color: #4527a0;
+    margin: 25px;
+}
+
+#resultadoLetra,
+#resultadoNumero,
+#resultadoColor,
+#resultadoSaludo,
+#resultadoFamilia,
+#resultadoEmocion,
+#resultadoEscuela,
+#resultadoFrase {
+    margin-top: 20px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.botones-juego {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+
+/* ================= GALERÍA ================= */
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.galeria img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+    transition: .3s;
+}
+
+.galeria img:hover {
+    transform: scale(1.04);
+}
+
+
+/* ================= FORMULARIO ================= */
+
+form {
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input,
+textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: Arial;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    background: #211047;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    line-height: 1.8;
+}
+
+
+/* ================= RESPONSIVE ================= */
+@media(max-width: 1100px) {
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* INICIO SIEMPRE DE LADO */
+   /* INICIO SIEMPRE DE LADO */
+.inicio {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 30px !important;
+}
+
+.hero-text {
+    width: 50% !important;
+    flex-shrink: 0 !important;
+    text-align: left !important;
+}
+
+.hero-imagen {
+    width: 50% !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+}
+
+@media(max-width: 700px) {
+
+    .tarjeta-info,
+    .importancia {
+        flex-direction: column;
+    }
+
+    .tarjeta-info img,
+    .importancia img {
+        width: 100%;
+    }
+
+    .letras {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .numeros {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .colores,
+    .frases {
+        grid-template-columns: 1fr;
+    }
+
+    .dropdown {
+        position: absolute;
+    }
+
+    .subdropdown {
+        position: static;
+        width: 100%;
+    }
+.btn-abrir-juego {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 15px 0;
+    transition: background-color 0.3s;
+}
+
+.btn-abrir-juego:hover {
+    background-color: #218838;
+}
+}/* BOTONES DE JUEGOS */
+#numeros-juegos .contenedor-enlaces {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 25px !important;
+    flex-wrap: wrap !important;
+    margin-top: 30px !important;
+}
+
+#numeros-juegos .btn-abrir-juego {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 280px !important;
+    min-height: 60px !important;
+    padding: 15px 20px !important;
+
+    background: linear-gradient(135deg, #4b2ca3, #2377d8) !important;
+    color: white !important;
+
+    border: none !important;
+    border-radius: 15px !important;
+
+    font-size: 18px !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+
+    cursor: pointer !important;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25) !important;
+
+    transition: 0.3s !important;
+}
+
+#numeros-juegos .btn-abrir-juego:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.30) !important;
+}
+/* ===== ZONA DE JUEGOS DE NÚMEROS ===== */
+
+#numeros-juegos {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#numeros-juegos h2 {
+    color: #4527a0;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.zona-juegos-numeros {
+    width: 90%;
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 40px 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    box-sizing: border-box;
+}
+
+.zona-juegos-numeros h3 {
+    color: #4527a0;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.zona-juegos-numeros p {
+    font-size: 16px;
+    margin-bottom: 60px;
+}
+
+.botones-juegos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.botones-juegos button {
+    background: #4b2ca3 !important;
+    color: white !important;
+
+    border: 2px solid #4b2ca3 !important;
+    border-radius: 25px !important;
+
+    padding: 14px 25px !important;
+
+    min-width: 220px;
+    min-height: 50px;
+
+    font-size: 16px !important;
+    font-weight: bold !important;
+
+    cursor: pointer !important;
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+
+    transition: all 0.3s ease;
+}
+
+.botones-juegos button:hover {
+    background: #5e35b1 !important;
+    border-color: #5e35b1 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(0,0,0,0.20);
+}
+#abecedario-juegos {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#abecedario-juegos h2 {
+    color: #4527a0;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.seccion-juego {
+    width: 90%;
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 40px 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    box-sizing: border-box;
+}
+
+.seccion-juego p {
+    font-size: 17px;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+/* BOTÓN DEL ABECEDARIO */
+.boton-juego {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #4b2ca3;
+    color: white !important;
+
+    text-decoration: none;
+
+    border: 2px solid #4b2ca3;
+    border-radius: 25px;
+
+    padding: 14px 25px;
+
+    min-width: 220px;
+    min-height: 50px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+
+    transition: all 0.3s ease;
+}
+
+.boton-juego:hover {
+    background: #5e35b1;
+    border-color: #5e35b1;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(0,0,0,0.20);
+}
+.boton-abecedario {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    width: 250px !important;
+    height: 60px !important;
+
+    margin: 30px auto !important;
+
+    background-color: #4b2ca3 !important;
+    color: white !important;
+
+    border: 4px solid #2e1a70 !important;
+    border-radius: 30px !important;
+
+    font-size: 18px !important;
+    font-weight: bold !important;
+
+    cursor: pointer !important;
+
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25) !important;
+
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+.boton-abecedario:hover {
+    background-color: #5e35b1 !important;
+    transform: translateY(-3px);
+}
+/* ============================= */
+/* NÚMEROS EN LENGUA DE SEÑAS */
+/* ============================= */
+
+#numeros-imagenes .numeros {
+    display: grid;
+    grid-template-columns: repeat(4, 220px);
+    justify-content: center;
+    gap: 25px;
+    margin: 35px auto;
+}
+
+/* TODAS LAS TARJETAS IGUALES */
+#numeros-imagenes .letra-card {
+    width: 220px;
+    height: 280px;
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* TODAS LAS IMÁGENES IGUALES */
+#numeros-imagenes .letra-card img {
+    width: 150px;
+    height: 190px;
+    object-fit: contain;
+}
+
+/* NOMBRES */
+#numeros-imagenes .letra-card h3 {
+    font-size: 24px;
+    color: #3f2ca3;
+    margin: 0;
+}
+/* ================================
+   NÚMEROS - ORDENADOS Y CENTRADOS
+   ================================ */
+
+.numeros {
+    width: 100% !important;
+    max-width: 1000px !important;
+    margin: 35px auto !important;
+    padding: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(4, 210px) !important;
+    gap: 25px !important;
+
+    justify-content: center !important;
+    align-items: start !important;
+}
+
+/* CADA TARJETA EXACTAMENTE IGUAL */
+.numeros > .letra-card {
+    width: 210px !important;
+    height: 280px !important;
+
+    margin: 0 !important;
+    padding: 15px !important;
+
+    background: white !important;
+    border-radius: 18px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    box-sizing: border-box !important;
+}
+
+/* IMÁGENES DEL MISMO TAMAÑO */
+.numeros > .letra-card img {
+    width: 145px !important;
+    height: 180px !important;
+
+    object-fit: contain !important;
+}
+
+/* NOMBRES */
+.numeros > .letra-card h3 {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 26px !important;
+    line-height: 1.1 !important;
+
+    color: #4527a0 !important;
+    text-align: center !important;
+}
+/* =====================================================
+   ZONA DE JUEGOS - BOTONES
+   ===================================================== */
+
+/* ==============================
+   BOTONES - ZONA DE JUEGOS
+   ============================== */
+
+.botones-juego {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.botones-juego button {
+    padding: 12px 24px;
+    background: #4b2bb3;
+    color: white;
+    border: 2px solid #4b2bb3;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;
+    transition: 0.3s;
+}
+
+.botones-juego button:hover {
+    background: #5d35c9;
+    border-color: #5d35c9;
+    transform: translateY(-2px);
+}
+
+/* JCLIC en la segunda fila */
+.botones-juego button:last-child {
+    flex-basis: auto;
+}
+/* CORRECCIÓN DE SECCIONES */
+.seccion {
+    display: none;
+}
+
+#inicio {
+    display: flex;
+}
+/* =========================================
+   ORDENAR FICHAS DE ANIMALES
+========================================= */
+
+.contenedor-animales {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    box-sizing: border-box;
+}
+
+/* Cada ficha */
+.ficha-animal {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Imagen de la ficha */
+.ficha-animal img {
+    width: 100% !important;
+    max-width: 180px !important;
+    height: 160px !important;
+    object-fit: contain !important;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Nombre del animal */
+.ficha-animal h3,
+.ficha-animal p {
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+    .contenedor-animales {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+    .contenedor-animales {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        padding: 10px !important;
+    }
+}
+/* ==========================================
+   FICHAS DE ANIMALES ORDENADAS
+========================================== */
+
+#emociones-imagenes .vocabulario {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    box-sizing: border-box;
+}
+
+#emociones-imagenes .letra-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#emociones-imagenes .letra-card img {
+    width: 100% !important;
+    height: 160px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+#emociones-imagenes .letra-card h3 {
+    margin: 10px 0 !important;
+    text-align: center !important;
+}
+/* --- Fondo Animado y Moderno --- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Fondo con degradado dinámico e ilustración suave */
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  min-height: 100vh;
+}
+
+/* Animación del fondo */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Contenedor Principal de la Tarjeta --- */
+.card-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  
+  /* Animación de entrada de la tarjeta */
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* --- Animación de la Imagen --- */
+.card-image-wrapper {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 15px;
+  transition: transform 0.5s ease;
+  
+  /* Animación flotante suave */
+  animation: floatImage 4s ease-in-out infinite;
+}
+
+/* Efecto Hover al pasar el mouse por la imagen */
+.card-image-wrapper img:hover {
+  transform: scale(1.04);
+}
+
+/* --- Animaciones Keyframes --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatImage {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* =====================================
+   FONDO GENERAL DE TODA LA PÁGINA
+===================================== */
+
+body {
+    background-image:
+        linear-gradient(rgba(245, 242, 255, 0.65),
+                        rgba(233, 237, 255, 0.65)),
+        url("imagenes/fondo-pagina.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f4f5fb;
+}
+
+/* =====================================
+   FONDO DE LA BARRA DEL MENÚ
+===================================== */
+
+header {
+    background-image:
+        linear-gradient(rgba(55, 30, 130, 0.78),
+                        rgba(20, 80, 160, 0.78)),
+        url("imagenes/fondomenu.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* =====================================
+   FONDO DE LA PANTALLA DE INICIO
+===================================== */
+
+.inicio {
+    background-image:
+        linear-gradient(rgba(245, 242, 255, 0.65),
+                        rgba(233, 237, 255, 0.65)),
+        url("imagenes/Fondo\ inclusivo\ en\ tonos\ pastel.pngsssss");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Mantener legibles las opciones desplegables */
+.dropdown,
+.subdropdown,
+.submenu-item > button {
+    background-color: rgba(255, 255, 255, 0.97);
+}
+
+/* MENÚ MÁS GRANDE */
+header {
+    min-height: 90px;
+    padding: 12px 25px;
+}
+
+/* Nombre de la página */
+header .logo,
+header .logo-text {
+    font-size: 22px;
+}
+
+/* Opciones del menú */
+header nav a,
+header nav button {
+    font-size: 16px;
+    padding: 12px 10px;
+}
+
+/* Logo de la página */
+header img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+/* Separación entre opciones */
+header nav {
+    gap: 8px;
+}
+
+/* =========================================
+   IMAGEN DE FONDO PARA TODA LA PÁGINA
+========================================= */
+
+html {
+    min-height: 100%;
+    background-color: #f3efff;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background-image: url("imagenes/Fondo\ inclusivo\ en\ tonos\ pastel.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f3efff;
+}
+
+/* =========================================
+   TODAS LAS SECCIONES DE LA PÁGINA
+========================================= */
+
+main,
+section,
+.seccion,
+.contenido {
+    background-color: transparent;
+    background-image: none;
+}
+
+/* Mantener el fondo visible al cambiar de apartado */
+section:not(#inicio) {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Las tarjetas conservan un fondo claro */
+.card,
+.tarjeta,
+.tarjeta-contenido {
+    background-color: rgba(255, 255, 255, 0.90);
+}
+
+/* PIE DE PÁGINA */
+.pie-pagina {
+    background: #251247;
+    color: white;
+    padding: 30px 6% 15px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-contenedor {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-columna h3 {
+    color: #d8c6ff;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.footer-columna p,
+.footer-columna a {
+    color: #f1ecff;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.footer-columna a {
+    display: block;
+    text-decoration: none;
+}
+
+.footer-columna a:hover {
+    color: #8edcff;
+    text-decoration: underline;
+}
+
+.footer-inferior {
+    border-top: 1px solid #66518b;
+    margin-top: 25px;
+    padding-top: 12px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-inferior p {
+    margin: 5px 0;
+}
+
+@media (max-width: 700px) {
+    .footer-contenedor {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+}
